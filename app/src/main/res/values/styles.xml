@@ -8,4 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!--全局隐藏标题栏-->
+    <style name="AppTheme_NoTitle" parent="Theme.AppCompat.NoActionBar">
+    </style>
+
 </resources>
