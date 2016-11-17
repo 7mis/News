@@ -1,16 +1,20 @@
 package com.oliver.news.activity;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.oliver.news.R;
 import com.oliver.news.utils.DensityUtils;
+import com.oliver.news.utils.L;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +32,78 @@ public class GuideActivity extends AppCompatActivity {
     private List<ImageView> mIv_datas = new ArrayList<>();
     private LinearLayout ll_graypoints;
     private View v_redpoint;
+    private int mPointDis;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initView();
         initData();
+        initEvent();
+    }
+
+    /**
+     * 给 ViewPager 添加滑动事件
+     */
+    private void initEvent() {
+
+        /**监听布局完成的变化*/
+        v_redpoint.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+
+                /**第一个点的坐标 - 第二个点的坐标*/
+                mPointDis = ll_graypoints.getChildAt(1).getLeft() - ll_graypoints.getChildAt(0).getLeft();
+                L.d("pointDis" + mPointDis);
+
+                /**只需观察一次，距离不相互影响*/
+                v_redpoint.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+
+            }
+        });
+
+
+        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            /**
+             * @param position 页面的当前位置
+             * @param positionOffset 比例值
+             * @param positionOffsetPixels 偏移的像素
+             */
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                /*页面正在滑动的调用*/
+
+                /**确定红点的位置*/
+
+                /*获取红点的布局参数*/
+                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) v_redpoint.getLayoutParams();
+
+                /*比例值 * 间距 = 红点位移的距离*/
+                layoutParams.leftMargin = Math.round(mPointDis * (position + positionOffset));
+                v_redpoint.setLayoutParams(layoutParams);
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                /*页面滑动完成的调用*/
+
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                /*页面状态改变的调用*/
+
+//                L.d("SCROLL_STATE_DRAGGING ---1"+ViewPager.SCROLL_STATE_DRAGGING);
+//                L.d("SCROLL_STATE_IDLE ---0"+ViewPager.SCROLL_STATE_IDLE);
+//                L.d("SCROLL_STATE_SETTLING ---2"+ViewPager.SCROLL_STATE_SETTLING);
+
+
+            }
+        });
+
     }
 
     /**
