@@ -1,15 +1,16 @@
 package com.oliver.news.activity;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.oliver.news.R;
+import com.oliver.news.utils.DensityUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,8 @@ public class GuideActivity extends AppCompatActivity {
     private int[] pages_id = new int[]{R.drawable.guide_1, R.drawable.guide_2, R.drawable.guide_3};
     /*储存图片的容器*/
     private List<ImageView> mIv_datas = new ArrayList<>();
+    private LinearLayout ll_graypoints;
+    private View v_redpoint;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,29 @@ public class GuideActivity extends AppCompatActivity {
             iv.setScaleType(ImageView.ScaleType.FIT_XY);
 
             mIv_datas.add(iv);
+
+
+            //动态添加灰点
+
+            /**设备像素到普通像素的转换*/
+            int dis = DensityUtils.dp2px(this, 10);
+
+            View v = new View(this);
+            v.setBackgroundResource(R.drawable.v_point_gray);
+
+            /**宽，高*/
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(dis, dis);
+            if (i != 0) {
+                /*不是第一个点，设置左间距*/
+                lp.leftMargin = dis;
+            }
+
+            v.setLayoutParams(lp);
+
+            /*添加到容器中*/
+            ll_graypoints.addView(v);
+
+
         }
 
 
@@ -115,5 +141,9 @@ public class GuideActivity extends AppCompatActivity {
     private void initView() {
         setContentView(R.layout.activity_guide);
         vp = (ViewPager) findViewById(R.id.vp_guide_setpages);
+
+        ll_graypoints = (LinearLayout) findViewById(R.id.ll_guide_graypoint);
+
+        v_redpoint = findViewById(R.id.v_guide_redpoint);
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <android.support.v4.view.ViewPager
@@ -9,4 +9,51 @@
         android:layout_height="match_parent">
 
     </android.support.v4.view.ViewPager>
-</LinearLayout>
+
+    <!--点的容器-->
+
+    <!--红点在灰点的上方，用帧布局包裹-->
+    <!--灰点动态添加<有几个界面添加几个点>，红点实实在在存在-->
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dip">
+
+        <LinearLayout
+            android:id="@+id/ll_guide_graypoint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!--<View-->
+
+            <!--android:layout_width="10dip"-->
+            <!--android:layout_height="10dip"-->
+            <!--android:background="@drawable/v_point_gray"></View>-->
+
+            <!--<View-->
+            <!--android:layout_marginLeft="10dip"-->
+            <!--android:layout_marginRight="10dip"-->
+
+            <!--android:layout_width="10dip"-->
+            <!--android:layout_height="10dip"-->
+            <!--android:background="@drawable/v_point_gray"></View>-->
+
+            <!--<View-->
+
+            <!--android:layout_width="10dip"-->
+            <!--android:layout_height="10dip"-->
+            <!--android:background="@drawable/v_point_gray"></View>-->
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/v_guide_redpoint"
+            android:layout_width="10dip"
+            android:layout_height="10dip"
+            android:background="@drawable/v_point_red"></View>
+    </FrameLayout>
+
+</RelativeLayout>
