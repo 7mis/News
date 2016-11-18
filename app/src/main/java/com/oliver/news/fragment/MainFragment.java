@@ -5,11 +5,16 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.oliver.news.R;
+import com.oliver.news.page.BasePage;
+import com.oliver.news.page.GovaAffairsPage;
+import com.oliver.news.page.HomePage;
+import com.oliver.news.page.NewsCenterPage;
+import com.oliver.news.page.SettingCenterPage;
+import com.oliver.news.page.SmartServicesPage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +31,7 @@ public class MainFragment extends BaseFragment {
     private RadioGroup rg_radios;
 
 
-    private List<TextView> pages = new ArrayList<>();
+    private List<BasePage> pages = new ArrayList<>();
 
 
     @Override
@@ -59,15 +64,20 @@ public class MainFragment extends BaseFragment {
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            View v = pages.get(position);
+            BasePage page = pages.get(position);
 
-            container.addView(v);
+            View view = page.getRootView();
 
-            return v;
+            /**初始化当前页面的数据*/
+            page.initData();
+
+            container.addView(view);
+
+            return view;
         }
     }
 
-    /*索引值*/
+    /**索引值*/
     private int selectIndex = 0;
 
     /**
@@ -107,7 +117,9 @@ public class MainFragment extends BaseFragment {
         super.initEvent();
     }
 
-    /**设置当前选择的页面*/
+    /**
+     * 设置当前选择的页面
+     */
     private void switchPages() {
         vp_pagers.setCurrentItem(selectIndex);
     }
@@ -118,12 +130,12 @@ public class MainFragment extends BaseFragment {
         /*默认选择第一个页面*/
         rg_radios.check(R.id.rb_home);
 
-
-        for (int i = 0; i < 5; i++) {
-            TextView tv = new TextView(mContext);
-            tv.setText("tv" + i);
-            pages.add(tv);
-        }
+        /**添加 5 个页面*/
+        pages.add(new HomePage(mContext));
+        pages.add(new NewsCenterPage(mContext));
+        pages.add(new SmartServicesPage(mContext));
+        pages.add(new GovaAffairsPage(mContext));
+        pages.add(new SettingCenterPage(mContext));
 
 
         MyAdapter adapter = new MyAdapter();
@@ -132,7 +144,6 @@ public class MainFragment extends BaseFragment {
 
         super.initData();
     }
-
 
 
 }
