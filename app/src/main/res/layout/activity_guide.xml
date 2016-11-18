@@ -10,16 +10,31 @@
 
     </android.support.v4.view.ViewPager>
 
+
+    <Button
+        android:visibility="gone"
+        android:textColor="@drawable/bt_text_color_selector"
+        android:background="@drawable/bt_bg_selector"
+        android:id="@+id/bt_start"
+        android:padding="20dip"
+        android:text="开始体验"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/frameLayout"
+        android:layout_centerHorizontal="true" />
+
     <!--点的容器-->
 
     <!--红点在灰点的上方，用帧布局包裹-->
     <!--灰点动态添加<有几个界面添加几个点>，红点实实在在存在-->
     <FrameLayout
+        android:layout_marginTop="20dip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dip">
+        android:layout_marginBottom="20dip"
+        android:id="@+id/frameLayout">
 
         <LinearLayout
             android:id="@+id/ll_guide_graypoint"

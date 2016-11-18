@@ -11,6 +11,7 @@ import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 
 import com.oliver.news.activity.GuideActivity;
+import com.oliver.news.activity.HomeActivity;
 import com.oliver.news.utils.L;
 import com.oliver.news.utils.MyConstaints;
 import com.oliver.news.utils.SPUtils;
@@ -54,6 +55,9 @@ public class SplashActivity extends AppCompatActivity {
                 if (isSetUpFinish) {
                     /*进入主界面*/
                     L.d("进入主界面");
+                    Intent intent = new Intent(SplashActivity.this,HomeActivity.class);
+                    startActivity(intent);
+                    finish();
 
                 } else {
                     /*进入设置向导界面*/

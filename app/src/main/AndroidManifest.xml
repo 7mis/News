@@ -16,6 +16,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.GuideActivity"/>
+        <activity android:name=".activity.HomeActivity"/>
+
     </application>
 
 </manifest>

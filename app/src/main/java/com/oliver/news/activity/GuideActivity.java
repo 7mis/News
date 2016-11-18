@@ -1,5 +1,6 @@
 package com.oliver.news.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,6 +17,8 @@ import android.widget.LinearLayout;
 import com.oliver.news.R;
 import com.oliver.news.utils.DensityUtils;
 import com.oliver.news.utils.L;
+import com.oliver.news.utils.MyConstaints;
+import com.oliver.news.utils.SPUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +37,7 @@ public class GuideActivity extends AppCompatActivity {
     private LinearLayout ll_graypoints;
     private View v_redpoint;
     private int mPointDis;
+    private Button bt_start;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,22 @@ public class GuideActivity extends AppCompatActivity {
      * 给 ViewPager 添加滑动事件
      */
     private void initEvent() {
+
+
+        /*体验按钮事件*/
+        bt_start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GuideActivity.this, HomeActivity.class);
+                startActivity(intent);
+                finish();
+
+                /*修改状态值*/
+                SPUtils.putBoolean(getApplicationContext(), MyConstaints.ISSETUPFINISH, true);
+
+            }
+
+        });
 
         /**监听布局完成的变化*/
         v_redpoint.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -88,6 +109,15 @@ public class GuideActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 /*页面滑动完成的调用*/
+
+                if (position == mIv_datas.size() - 1) {
+                    /*显示按钮*/
+                    bt_start.setVisibility(View.VISIBLE);
+
+                } else {
+                    /*隐藏按钮*/
+                    bt_start.setVisibility(View.GONE);
+                }
 
 
             }
@@ -215,5 +245,7 @@ public class GuideActivity extends AppCompatActivity {
         ll_graypoints = (LinearLayout) findViewById(R.id.ll_guide_graypoint);
 
         v_redpoint = findViewById(R.id.v_guide_redpoint);
+
+        bt_start = (Button) findViewById(R.id.bt_start);
     }
 }
