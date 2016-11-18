@@ -5,14 +5,16 @@
     android:orientation="vertical">
 
     <!--整个界面由ViewPager 和 RadioButton 按钮组组成-->
-    <android.support.v4.view.ViewPager
+    <com.oliver.news.fragment.NoScrollViewPager
+        android:id="@+id/vp_mainfragment_pages"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
 
-    </android.support.v4.view.ViewPager>
+    </com.oliver.news.fragment.NoScrollViewPager>
 
     <RadioGroup
+        android:id="@+id/rg_radios"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bottom_tab_bg"
@@ -20,23 +22,26 @@
         android:orientation="horizontal">
 
         <RadioButton
+            android:id="@+id/rb_home"
             style="@style/radio_button_style"
             android:drawableTop="@drawable/firstpage_tag_selector"
             android:text="首页" />
 
         <RadioButton
+            android:id="@+id/rb_news"
             style="@style/radio_button_style"
-
             android:drawableTop="@drawable/newspage_tag_selector"
             android:gravity="center_horizontal"
             android:text="新闻中心" />
 
         <RadioButton
+            android:id="@+id/rb_smartservices"
             style="@style/radio_button_style"
             android:drawableTop="@drawable/smartservice_tag_selector"
             android:text="智慧服务" />
 
         <RadioButton
+            android:id="@+id/rb_govaffiar"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -48,8 +53,8 @@
             android:textColor="@drawable/rb_text_selector" />
 
         <RadioButton
+            android:id="@+id/rb_settingcenter"
             android:layout_width="0dip"
-
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="#00000000"
