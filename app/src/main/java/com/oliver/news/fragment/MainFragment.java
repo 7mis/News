@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.oliver.news.R;
@@ -122,6 +123,17 @@ public class MainFragment extends BaseFragment {
      */
     private void switchPages() {
         vp_pagers.setCurrentItem(selectIndex);
+
+
+        /**左侧菜单是否可以拖动*/
+        /*第一个和最后一个不可以拖动*/
+        if (selectIndex == 0 || selectIndex == 4) {
+            mContext.getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+        } else {
+            mContext.getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+
+        }
+
     }
 
     @Override
@@ -141,6 +153,9 @@ public class MainFragment extends BaseFragment {
         MyAdapter adapter = new MyAdapter();
         vp_pagers.setAdapter(adapter);
 
+
+        /*初始化，*/
+        switchPages();
 
         super.initData();
     }

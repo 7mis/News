@@ -27,7 +27,7 @@ public class HomePage extends BasePage {
         iv_menu.setVisibility(View.GONE);
 
         /*内容*/
-        TextView textView = new TextView(mcontxt);
+        TextView textView = new TextView(mContxt);
         textView.setText("首页的内容");
         textView.setTextSize(30);
         textView.setGravity(Gravity.CENTER);

@@ -18,7 +18,7 @@ import com.oliver.news.activity.HomeActivity;
  */
 public class BasePage {
 
-    protected HomeActivity mcontxt;
+    protected HomeActivity mContxt;
     private View rootView;
     protected TextView tv_title;
     protected ImageView iv_menu;
@@ -29,14 +29,15 @@ public class BasePage {
      * 构造函数，默认的布局
      */
     public BasePage(HomeActivity context) {
-        this.mcontxt = context;
+        this.mContxt = context;
 
         initView();
+        initEvent();
     }
 
     /**界面*/
     public void initView() {
-        rootView = View.inflate(mcontxt, R.layout.base_page_view, null);
+        rootView = View.inflate(mContxt, R.layout.base_page_view, null);
 
         tv_title = (TextView) rootView.findViewById(R.id.tv_basepage_title);
         iv_menu = (ImageView) rootView.findViewById(R.id.iv_basepage_menu);
@@ -64,7 +65,7 @@ public class BasePage {
         iv_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mcontxt.getSlidingMenu().toggle();
+                mContxt.getSlidingMenu().toggle();
             }
         });
     }

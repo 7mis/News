@@ -24,7 +24,7 @@ public class SmartServicesPage extends BasePage {
 
 
         /*内容*/
-        TextView textView = new TextView(mcontxt);
+        TextView textView = new TextView(mContxt);
         textView.setText("智慧服务的内容");
         textView.setTextSize(30);
         textView.setGravity(Gravity.CENTER);
@@ -32,4 +32,6 @@ public class SmartServicesPage extends BasePage {
         /*添加到内容中*/
         fl_content.addView(textView);
     }
+
+
 }
