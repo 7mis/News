@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--整个界面由ViewPager 和 RadioButton 按钮组组成-->
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+    </android.support.v4.view.ViewPager>
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bottom_tab_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <RadioButton
+            style="@style/radio_button_style"
+            android:drawableTop="@drawable/firstpage_tag_selector"
+            android:text="首页" />
+
+        <RadioButton
+            style="@style/radio_button_style"
+
+            android:drawableTop="@drawable/newspage_tag_selector"
+            android:gravity="center_horizontal"
+            android:text="新闻中心" />
+
+        <RadioButton
+            style="@style/radio_button_style"
+            android:drawableTop="@drawable/smartservice_tag_selector"
+            android:text="智慧服务" />
+
+        <RadioButton
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:button="@null"
+            android:drawableTop="@drawable/govaffairs_tag_selector"
+            android:gravity="center_horizontal"
+            android:text="政务"
+            android:textColor="@drawable/rb_text_selector" />
+
+        <RadioButton
+            android:layout_width="0dip"
+
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:button="@null"
+            android:drawableTop="@drawable/settingcenter_tag_selector"
+            android:gravity="center_horizontal"
+            android:text="设置中心"
+            android:textColor="@drawable/rb_text_selector" />
+
+    </RadioGroup>
+</LinearLayout>

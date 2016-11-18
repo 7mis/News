@@ -12,4 +12,15 @@
     <style name="AppTheme_NoTitle" parent="Theme.AppCompat.NoActionBar">
     </style>
 
+    <style name="radio_button_style">
+        <item name="android:textColor">@drawable/rb_text_selector</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:background">#00000000</item>
+        <item name="android:button">@null</item>
+        <item name="android:layout_width">0dip</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
 </resources>
