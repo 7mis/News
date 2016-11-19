@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--新闻中心 url-->
+    <string name="newscenterurl">http://192.168.1.101:8080/zhbj/categories.json</string>
+</resources>
