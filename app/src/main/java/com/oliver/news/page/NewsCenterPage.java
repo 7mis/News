@@ -12,6 +12,7 @@ import com.lidroid.xutils.http.client.HttpRequest;
 import com.oliver.news.R;
 import com.oliver.news.activity.HomeActivity;
 import com.oliver.news.domain.NewsCenterData_GosnFormat;
+import com.oliver.news.fragment.LeftFragment;
 import com.oliver.news.utils.L;
 
 /**
@@ -99,6 +100,16 @@ public class NewsCenterPage extends BasePage {
 
 //        L.d("- " + newsCenterData.data.get(0).getChildren().get(0).getTitle());
         L.d("+ " + newsCenterData.getData().get(0).getChildren().get(0).getTitle());
+
+
+        /**新闻中心中处理数据
+         *  1. 设置数据给左侧菜单
+         *  2. 数据有了，设置数据的 Api 也有，只需要获取到 LeftFragment 即可
+         *         - mContext.getLeftFragment()
+         *         - setLeftMenuData()
+         */
+        LeftFragment leftFragment = mContxt.getLeftFragment();
+        leftFragment.setLeftMenuData(newsCenterData.getData());
 
     }
 

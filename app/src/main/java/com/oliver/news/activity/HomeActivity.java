@@ -52,11 +52,11 @@ public class HomeActivity extends SlidingFragmentActivity {
 
     /*获取 fragment*/
     public LeftFragment getLeftFragment() {
-        return (LeftFragment) fragmentManager.getFragment(null, LEFT_FRAGMENT);
+        return (LeftFragment) fragmentManager.findFragmentByTag(LEFT_FRAGMENT);
     }
 
     public MainFragment getMainFragment() {
-        return (MainFragment) fragmentManager.getFragment(null, MAIN_FRAGMENT);
+        return (MainFragment) fragmentManager.findFragmentByTag(MAIN_FRAGMENT);
     }
 
 
