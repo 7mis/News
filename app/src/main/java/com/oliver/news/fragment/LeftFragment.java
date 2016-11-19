@@ -24,6 +24,12 @@ public class LeftFragment extends BaseFragment {
     private MyAdapter adapter;
 
 
+    /**
+     * 默认第一个被选中
+     */
+    private int selectIndex = 0;
+
+
     @Override
     public View initView() {
         lv = new ListView(mContext);
@@ -31,7 +37,7 @@ public class LeftFragment extends BaseFragment {
         lv.setDividerHeight(0);//没有分割线
 
         lv.setSelector(new ColorDrawable(Color.TRANSPARENT));//设置选中的颜色为透明
-        lv.setPadding(0,80,0,0);//顶部的 padding
+        lv.setPadding(0, 80, 0, 0);//顶部的 padding
 
         adapter = new MyAdapter();
         lv.setAdapter(adapter);
@@ -40,6 +46,28 @@ public class LeftFragment extends BaseFragment {
         return lv;
     }
 
+    /**
+     * ListView 条目的点击事件
+     */
+    @Override
+    public void initEvent() {
+        /**设置 tv 选中的状态*/
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                /**设置选中天目的 tv 设置成可用*/
+                selectIndex = position;
+
+                /**更新界面*/
+                adapter.notifyDataSetChanged();
+
+
+            }
+        });
+
+        super.initEvent();
+    }
 
 
     /**
@@ -76,6 +104,13 @@ public class LeftFragment extends BaseFragment {
             /*数据*/
 
             tv.setText(mLeftMenuData.get(position).getTitle());
+
+            /**设置选中的位置可用*/
+            if (selectIndex == position) {
+                tv.setEnabled(true);
+            } else {
+                tv.setEnabled(false);
+            }
 
             return tv;
         }
