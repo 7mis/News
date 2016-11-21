@@ -30,6 +30,7 @@ import java.util.List;
 public class NewsCenterPage extends BasePage {
 
     private List<BaseNewsCenterPage> mBaseNewsCenterPages = new ArrayList<>();
+
     private NewsCenterData_GosnFormat newsCenterData;
 
     /**
@@ -174,7 +175,7 @@ public class NewsCenterPage extends BasePage {
             switch (type) {
                 case 1:
                     /**加载 -新闻- 页面*/
-                    mBaseNewsCenterPages.add(new NewsPage_NewsCenter(mContxt));
+                    mBaseNewsCenterPages.add(new NewsPage_NewsCenter(mContxt,newsCenterData.getData().get(0).getChildren()));
                     break;
                 case 10:
                     /**加载 -专题- 页面*/
