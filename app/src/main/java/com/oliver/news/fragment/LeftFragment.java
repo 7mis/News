@@ -62,13 +62,24 @@ public class LeftFragment extends BaseFragment {
 
                 /**更新界面*/
                 adapter.notifyDataSetChanged();
+
+
                 /**让新闻中心页面显示 <新闻> <组图> <互动> <专题> 中的一个
                  *
                  * 1. 新闻中心需要提供 api
                  *
                  */
-                BasePage page = mContext.getMainFragment().getSelectPage();
-                page.selectPage(selectIndex);
+
+                /**如果实现了接口：使用接口监听回调
+                 * else 使用正常途径
+                 *
+                 */
+                if (mOnLeftMenuPageChangeListener != null) {
+                    mOnLeftMenuPageChangeListener.selectPage(selectIndex);
+                } else {
+                    BasePage page = mContext.getMainFragment().getSelectPage();
+                    page.selectPage(selectIndex);
+                }
 
                 /**关闭左侧菜单*/
                 mContext.getSlidingMenu().toggle();
@@ -148,4 +159,31 @@ public class LeftFragment extends BaseFragment {
         adapter.notifyDataSetChanged();
 
     }
+
+
+    /**任何两个组件都可以直接通信：接口监听回调
+     */
+
+    /**
+     * 获取接口：声明接口类型的成员变量
+     */
+    private OnLeftMenuPageChangeListener mOnLeftMenuPageChangeListener;
+
+    /**
+     * 定义方法
+     */
+    public void setOnLeftMenuPageChangeListener(OnLeftMenuPageChangeListener listener) {
+        this.mOnLeftMenuPageChangeListener = listener;
+    }
+
+
+    /**
+     * 事件监听：哪个 item 被选择
+     * 设置方法暴露出来
+     */
+    public interface OnLeftMenuPageChangeListener {
+        void selectPage(int selectIndex);
+    }
+
+
 }

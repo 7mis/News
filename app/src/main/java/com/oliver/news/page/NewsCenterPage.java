@@ -124,7 +124,18 @@ public class NewsCenterPage extends BasePage {
         LeftFragment leftFragment = mContxt.getLeftFragment();
         leftFragment.setLeftMenuData(newsCenterData.getData());
 
+        /**实现该接口：优先使用接口回调*/
+//        leftFragment.setOnLeftMenuPageChangeListener(new LeftFragment.OnLeftMenuPageChangeListener() {
+//            @Override
+//            public void selectPage(int selectIndex) {
+//                L.d("接口回调："+selectIndex+"页面");
+//
+//            }
+//        });
     }
+
+
+
 
     /**
      * Gson 解析 json 数据
