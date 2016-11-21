@@ -136,6 +136,13 @@ public class MainFragment extends BaseFragment {
 
     }
 
+    /**获取选中的页面<5个中的其中一个>
+     * @return 返回选中页面的 item
+     */
+    public BasePage getSelectPage() {
+        return pages.get(selectIndex);
+    }
+
     @Override
     public void initData() {
 

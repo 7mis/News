@@ -58,6 +58,18 @@ public class NewsCenterPage extends BasePage {
 
     }
 
+
+    /**
+     * 设置显示的新闻条目页面
+     * 在父类中声明 子类都可以实现
+     * @param pageIndex
+     *  - 运行时多态
+     */
+    public void selectPage(int pageIndex) {
+        L.d("显示 "+pageIndex+" 页面 - NewsCenterPage");
+
+    }
+
     /**
      * 从服务器获取数据
      * 1. 请求 url
@@ -67,7 +79,7 @@ public class NewsCenterPage extends BasePage {
         httpUtils.send(HttpRequest.HttpMethod.GET, url, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                L.d("7mis", "网络连接成功");
+                L.d("网络连接成功");
 
                 /**2. 获取 json 数据*/
                 String jsonDataStr = responseInfo.result;
@@ -80,20 +92,21 @@ public class NewsCenterPage extends BasePage {
                 processData(newsCenterData);
 
 
-
             }
 
             @Override
             public void onFailure(HttpException e, String s) {
                 /**请求数据失败*/
-                L.d("7mis", "网络连接失败");
+                L.d("网络连接失败");
 
 
             }
         });
     }
 
-    /**处理数据
+    /**
+     * 处理数据
+     *
      * @param newsCenterData
      */
     private void processData(NewsCenterData_GosnFormat newsCenterData) {
@@ -114,7 +127,7 @@ public class NewsCenterPage extends BasePage {
     }
 
     /**
-     *  Gson 解析 json 数据
+     * Gson 解析 json 数据
      *
      * @param jsonDataStr
      */

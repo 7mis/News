@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.oliver.news.R;
 import com.oliver.news.activity.HomeActivity;
+import com.oliver.news.utils.L;
 
 /**
  * 5 个页面的基类：
@@ -56,6 +57,17 @@ public class BasePage {
     public void initData() {
 
     }
+
+    /** 子类自己去实现完成页面的切换:
+     * 面向对象，多态
+     *  - 编译时看父类
+     *  - 运行时具体子类
+     * @param pageIndex
+     */
+    public void selectPage(int pageIndex) {
+        L.d("显示  "+pageIndex+" 页面 - BasePage");
+    }
+
 
 
     /**

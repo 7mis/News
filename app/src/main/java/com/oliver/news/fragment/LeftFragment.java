@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.oliver.news.R;
 import com.oliver.news.domain.NewsCenterData_GosnFormat;
+import com.oliver.news.page.BasePage;
 import com.oliver.news.utils.L;
 
 import java.util.List;
@@ -61,6 +62,16 @@ public class LeftFragment extends BaseFragment {
 
                 /**更新界面*/
                 adapter.notifyDataSetChanged();
+                /**让新闻中心页面显示 <新闻> <组图> <互动> <专题> 中的一个
+                 *
+                 * 1. 新闻中心需要提供 api
+                 *
+                 */
+                BasePage page = mContext.getMainFragment().getSelectPage();
+                page.selectPage(selectIndex);
+
+                /**关闭左侧菜单*/
+                mContext.getSlidingMenu().toggle();
 
 
             }
