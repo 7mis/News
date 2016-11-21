@@ -66,7 +66,16 @@ public class NewsCenterPage extends BasePage {
      *  - 运行时多态
      */
     public void selectPage(int pageIndex) {
-        L.d("显示 "+pageIndex+" 页面 - NewsCenterPage");
+        L.d("不使用接口 "+pageIndex+" 页面 - NewsCenterPage");
+        changePage(pageIndex);
+
+    }
+
+    /**
+     * 完成页面的切换
+     * @param pageIndex
+     */
+    private void changePage(int pageIndex) {
 
     }
 
@@ -125,13 +134,13 @@ public class NewsCenterPage extends BasePage {
         leftFragment.setLeftMenuData(newsCenterData.getData());
 
         /**实现该接口：优先使用接口回调*/
-//        leftFragment.setOnLeftMenuPageChangeListener(new LeftFragment.OnLeftMenuPageChangeListener() {
-//            @Override
-//            public void selectPage(int selectIndex) {
-//                L.d("接口回调："+selectIndex+"页面");
-//
-//            }
-//        });
+        leftFragment.setOnLeftMenuPageChangeListener(new LeftFragment.OnLeftMenuPageChangeListener() {
+            @Override
+            public void selectPage(int selectIndex) {
+                L.d("接口回调："+selectIndex+"页面");
+                changePage(selectIndex);
+            }
+        });
     }
 
 

@@ -65,7 +65,7 @@ public class BasePage {
      * @param pageIndex
      */
     public void selectPage(int pageIndex) {
-        L.d("显示  "+pageIndex+" 页面 - BasePage");
+        L.d("不使用接口  "+pageIndex+" 页面 - BasePage");
     }
 
 
