@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
@@ -34,6 +35,12 @@ public class NewsPage_NewsCenter extends BaseNewsCenterPage {
 
     @ViewInject(R.id.vp_newspage_pages)
     private ViewPager vp_pages;
+
+
+    /**图片点击下一个 tpi*/
+    @ViewInject(R.id.iv_newspage_next)
+    private ImageView iv_next;
+
 
     /**
      * 只需要一个 children
@@ -130,6 +137,16 @@ public class NewsPage_NewsCenter extends BaseNewsCenterPage {
      */
     @Override
     public void initEvent() {
+        iv_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /**切换到下一个页面*/
+                vp_pages.setCurrentItem(vp_pages.getCurrentItem()+1);
+            }
+        });
+
+
+
         tpi_pagetag.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
