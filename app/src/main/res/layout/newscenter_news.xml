@@ -23,15 +23,15 @@
         </LinearLayout>
 
         <!--下一个页面的按钮-->
-        <ImageView
-            android:padding="17dip"
-            android:id="@+id/iv_newspage_next"
-            android:background="#ffffff"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/news_cate_arr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <!--<ImageView-->
+            <!--android:padding="17dip"-->
+            <!--android:id="@+id/iv_newspage_next"-->
+            <!--android:background="#ffffff"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:src="@drawable/news_cate_arr"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
     </RelativeLayout>
 
 

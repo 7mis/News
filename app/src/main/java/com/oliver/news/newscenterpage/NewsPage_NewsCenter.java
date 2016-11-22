@@ -39,10 +39,10 @@ public class NewsPage_NewsCenter extends BaseNewsCenterPage {
 
 
     /**
-     * 图片点击下一个 tpi
-     */
-    @ViewInject(R.id.iv_newspage_next)
-    private ImageView iv_next;
+//     * 图片点击下一个 tpi
+//     */
+//    @ViewInject(R.id.iv_newspage_next)
+//    private ImageView iv_next;
 
 
     /**
@@ -149,13 +149,13 @@ public class NewsPage_NewsCenter extends BaseNewsCenterPage {
      */
     @Override
     public void initEvent() {
-        iv_next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /**切换到下一个页面*/
-                vp_pages.setCurrentItem(vp_pages.getCurrentItem() + 1);
-            }
-        });
+//        iv_next.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                /**切换到下一个页面*/
+//                vp_pages.setCurrentItem(vp_pages.getCurrentItem() + 1);
+//            }
+//        });
 
 
         tpi_pagetag.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
