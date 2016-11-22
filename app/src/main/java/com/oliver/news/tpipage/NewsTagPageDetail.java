@@ -150,6 +150,8 @@ public class NewsTagPageDetail {
             /**设置显示数据*/
             L.d("picUrl " + picUrl);
 
+//            String url = "http://fdfs.xmcdn.com/group16/M08/F1/13/wKgDbFal40bR7Uc6AAH3JpWhLiQ015_android_large.jpg";
+
             bitmapUtils.display(iv, picUrl);
 
             container.addView(iv);
