@@ -2,4 +2,5 @@
 <resources>
     <!--新闻中心 url-->
     <string name="newscenterurl">http://192.168.1.102:8080/zhbj/categories.json</string>
+    <string name="baseurl">http://192.168.1.102:8080/zhbj/</string>
 </resources>
