@@ -15,6 +15,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.oliver.news.R;
 import com.oliver.news.activity.HomeActivity;
 import com.oliver.news.domain.NewsCenterData_GosnFormat;
+import com.oliver.news.tpipage.NewsTagPageDetail;
 import com.oliver.news.utils.L;
 import com.viewpagerindicator.TabPageIndicator;
 
@@ -37,7 +38,9 @@ public class NewsPage_NewsCenter extends BaseNewsCenterPage {
     private ViewPager vp_pages;
 
 
-    /**图片点击下一个 tpi*/
+    /**
+     * 图片点击下一个 tpi
+     */
     @ViewInject(R.id.iv_newspage_next)
     private ImageView iv_next;
 
@@ -79,7 +82,6 @@ public class NewsPage_NewsCenter extends BaseNewsCenterPage {
     }
 
     /**
-     *
      * ViewPager 的输配器
      */
     private class MyAdapter extends PagerAdapter {
@@ -107,18 +109,28 @@ public class NewsPage_NewsCenter extends BaseNewsCenterPage {
             return view == object;
         }
 
+        /**
+         * ViewPager 显示数据
+         *
+         * @param container
+         * @param position
+         * @return
+         */
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
+//
+//            TextView tv = new TextView(mContext);
+//            tv.setTextColor(Color.WHITE);
+//            tv.setText(mChildrenDatas.get(position).getTitle());
 
-            TextView tv = new TextView(mContext);
-            tv.setTextColor(Color.WHITE);
-            tv.setText(mChildrenDatas.get(position).getTitle());
 
-            tv.setGravity(Gravity.CENTER);
+//            v.setGravity(Gravity.CENTER);
+            NewsTagPageDetail newsTagPageDetail = new NewsTagPageDetail(mContext,mChildrenDatas.get(position));
+            View v = newsTagPageDetail.getRootView();
 
-            container.addView(tv);
+            container.addView(v);
 
-            return tv;
+            return v;
         }
 
         @Override
@@ -132,7 +144,7 @@ public class NewsPage_NewsCenter extends BaseNewsCenterPage {
      * 1. viewpager 和 tpi 绑定，设置的事件，要么被重置为 null，要么为 this
      * 2. 改为：tpi_pagetag.setOnPageChangeListener
      * 3. viewpager 当前对象已经实现了这个接口
-     *
+     * <p/>
      * ViewPager 页面选择监听
      */
     @Override
@@ -141,10 +153,9 @@ public class NewsPage_NewsCenter extends BaseNewsCenterPage {
             @Override
             public void onClick(View v) {
                 /**切换到下一个页面*/
-                vp_pages.setCurrentItem(vp_pages.getCurrentItem()+1);
+                vp_pages.setCurrentItem(vp_pages.getCurrentItem() + 1);
             }
         });
-
 
 
         tpi_pagetag.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
