@@ -8,11 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.oliver.news.R;
 import com.oliver.news.activity.HomeActivity;
 import com.oliver.news.domain.NewsCenterData_GosnFormat;
+import com.oliver.news.utils.L;
 import com.viewpagerindicator.TabPageIndicator;
 
 import java.util.List;
@@ -53,7 +55,6 @@ public class NewsPage_NewsCenter extends BaseNewsCenterPage {
     }
 
 
-
     /**
      * 设置数据
      */
@@ -71,11 +72,14 @@ public class NewsPage_NewsCenter extends BaseNewsCenterPage {
     }
 
     /**
+     *
      * ViewPager 的输配器
      */
     private class MyAdapter extends PagerAdapter {
 
-        /**页签 显示数据调用的方法
+        /**
+         * 页签 显示数据调用的方法
+         *
          * @param position
          * @return
          */
@@ -116,6 +120,48 @@ public class NewsPage_NewsCenter extends BaseNewsCenterPage {
         }
     }
 
+    /**
+     * vp_pages.setOnPageChangeListener 无效原因：
+     * 1. viewpager 和 tpi 绑定，设置的事件，要么被重置为 null，要么为 this
+     * 2. 改为：tpi_pagetag.setOnPageChangeListener
+     * 3. viewpager 当前对象已经实现了这个接口
+     *
+     * ViewPager 页面选择监听
+     */
+    @Override
+    public void initEvent() {
+        tpi_pagetag.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                /*滑动状态*/
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                L.d("解决侧滑冲突");
+                /**选择完成
+                 * 1. 是否处于第一个页面：可以滑出左侧菜单
+                 * 2. 否则，不可以滑出
+                 */
+                if (position == 0) {
+                    mContext.getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+                } else {
+                    mContext.getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+
+                }
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                /*页面改变*/
+
+            }
+        });
+
+
+        super.initEvent();
+    }
 
     @Override
     public View initView() {
