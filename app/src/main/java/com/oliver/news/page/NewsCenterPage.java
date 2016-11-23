@@ -44,6 +44,7 @@ public class NewsCenterPage extends BasePage {
 
     @Override
     public void initData() {
+        L.d("新闻数据 -- 懒加载");
         tv_title.setText("新闻中心");
 
         /*内容*/

@@ -8,7 +8,7 @@ import android.view.MotionEvent;
 /**不可滑动的 ViewPager
  * Created by Administrator on 2016/11/18.
  */
-public class NoScrollViewPager extends ViewPager {
+public class NoScrollViewPager extends LazyViewPager {
     public NoScrollViewPager(Context context) {
         super(context);
     }

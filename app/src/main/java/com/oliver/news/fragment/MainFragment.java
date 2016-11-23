@@ -26,7 +26,8 @@ import java.util.List;
 public class MainFragment extends BaseFragment {
 
     @ViewInject(R.id.vp_mainfragment_pages)
-    private ViewPager vp_pagers;
+//    private ViewPager vp_pagers;
+    private NoScrollViewPager vp_pagers;
 
     @ViewInject(R.id.rg_radios)
     private RadioGroup rg_radios;
