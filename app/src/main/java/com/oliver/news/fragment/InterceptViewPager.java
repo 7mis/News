@@ -21,6 +21,9 @@ import android.view.MotionEvent;
 public class InterceptViewPager extends ViewPager {
 
 
+    private float downX;
+    private float downY;
+
     public InterceptViewPager(Context context) {
         super(context);
     }
@@ -35,6 +38,52 @@ public class InterceptViewPager extends ViewPager {
         /**申请不拦截当前的事件*/
         getParent().requestDisallowInterceptTouchEvent(true);
 
+        /**有条件的拦截：
+         * 1. 当前页面的索引值
+         * 2. move
+         */
+
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                /*按下*/
+
+                /**获取按下的坐标*/
+                downX = ev.getX();
+                downY = ev.getY();
+
+
+                break;
+            case MotionEvent.ACTION_MOVE:
+                /*移动*/
+                float moveX = ev.getX();
+                float moveY = ev.getY();
+
+                float dx = moveX - downX;
+                float dy = moveY - downY;
+
+                /**判断横向还是纵向*/
+                if (Math.abs(dx) > Math.abs(dy)) {
+                    /**横向移动
+                     * 不是最后的 page 并且从右往左滑动，申请父控件不拦截
+                     */
+                    if (getCurrentItem() < getChildCount() - 1 && dx < 0) {
+                        getParent().requestDisallowInterceptTouchEvent(true);//不拦截
+                    } else if (getCurrentItem() != 0 && dx > 0) {
+                        getParent().requestDisallowInterceptTouchEvent(true);//不拦截
+                    } else {
+                        getParent().requestDisallowInterceptTouchEvent(false);//拦截
+                    }
+                } else {
+                    /**纵向 默认*/
+                    getParent().requestDisallowInterceptTouchEvent(false);//拦截
+                }
+
+                break;
+            default:
+                break;
+
+
+        }
 
         return super.dispatchTouchEvent(ev);
     }
