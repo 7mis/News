@@ -1,5 +1,6 @@
 package com.oliver.news.page;
 
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
@@ -20,6 +21,8 @@ import com.oliver.news.newscenterpage.NewsPage_NewsCenter;
 import com.oliver.news.newscenterpage.PhotoPage_NewsCenter;
 import com.oliver.news.newscenterpage.TopicPage_NewsCenter;
 import com.oliver.news.utils.L;
+import com.oliver.news.utils.MyConstaints;
+import com.oliver.news.utils.SPUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +71,22 @@ public class NewsCenterPage extends BasePage {
 //        String url = "http://192.168.1.101:8080/zhbj/categories.json";
         String url = mContxt.getResources().getString(R.string.newscenterurl);
 
+        /**1. 本地数据获取：解决网络差/没开网络
+         *
+         *  - 1. 先判断是否有本地数据
+         *  - 2. 先读取本地数据，再从网络获取数据
+         *
+         */
+        String localJson = SPUtils.getString(mContxt, MyConstaints.LOCALNEWSDATAJSON, null);
+        if (!TextUtils.isEmpty(localJson)) {
+            /**不为空，有本地缓存数据*/
+            /*解析数据*/
+            newsCenterData = parseJsonData(localJson);
+            /*处理数据*/
+            processData(newsCenterData);
+
+        }
+
         getDataFromNet(url);
 
 
@@ -108,6 +127,11 @@ public class NewsCenterPage extends BasePage {
 
                 /**2. 获取 json 数据*/
                 String jsonDataStr = responseInfo.result;
+
+                /**保存到本地缓存*/
+                SPUtils.putString(mContxt, MyConstaints.LOCALNEWSDATAJSON, jsonDataStr);
+
+
 
                 /**3. 解析 json 数据*/
 
@@ -171,12 +195,16 @@ public class NewsCenterPage extends BasePage {
      * 动态添加 4 个页面
      */
     private void initNewsPages(NewsCenterData_GosnFormat newsCenterData) {
+
+        /**清空原有数据,使用缓存可能加载两次，8个页面*/
+        mBaseNewsCenterPages.clear();
+
         for (NewsCenterData_GosnFormat.DataBean data : newsCenterData.getData()) {
             int type = data.getType();
             switch (type) {
                 case 1:
                     /**加载 -新闻- 页面*/
-                    mBaseNewsCenterPages.add(new NewsPage_NewsCenter(mContxt,newsCenterData.getData().get(0).getChildren()));
+                    mBaseNewsCenterPages.add(new NewsPage_NewsCenter(mContxt, newsCenterData.getData().get(0).getChildren()));
                     break;
                 case 10:
                     /**加载 -专题- 页面*/
