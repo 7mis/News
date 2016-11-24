@@ -23,6 +23,7 @@ import com.oliver.news.R;
 import com.oliver.news.activity.HomeActivity;
 import com.oliver.news.domain.NewsCenterData_GosnFormat;
 import com.oliver.news.domain.NewsvCenterDetailData;
+import com.oliver.news.utils.DensityUtils;
 import com.oliver.news.utils.L;
 import com.oliver.news.utils.MyConstaints;
 import com.oliver.news.utils.SPUtils;
@@ -136,6 +137,38 @@ public class NewsTagPageDetail {
         topNews = newsvCenterDetailData.getData().getTopnews();
         setLunBoData();
 
+        /**初始化点的数据*/
+        initPoints();
+
+
+
+
+    }
+
+    /**
+     * 初始化点的显示，<>点的个数和轮播图片格式一致</>
+     */
+    public void initPoints() {
+
+        /*会执行多次，先清空点*/
+        ll_point.removeAllViews();
+
+        for (int i = 0; i < topNews.size(); i++) {
+
+            View view = new View(mContext);
+            view.setBackgroundResource(R.drawable.lubo_v_point_selector);
+            view.setEnabled(false);
+
+            /**设置点的参数 大小 间距*/
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(DensityUtils.dp2px(mContext, 5), DensityUtils.dp2px(mContext, 5));
+
+            lp.leftMargin = DensityUtils.dp2px(mContext, 8);
+            view.setLayoutParams(lp);
+
+            ll_point.addView(view);
+
+        }
+
     }
 
     private void setLunBoData() {
@@ -194,7 +227,6 @@ public class NewsTagPageDetail {
         public boolean isViewFromObject(View view, Object object) {
             return view == object;
         }
-
 
 
     }
