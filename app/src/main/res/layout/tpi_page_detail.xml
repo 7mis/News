@@ -10,12 +10,12 @@
         android:layout_height="175dip">
 
         <!--ViewPager-->
-        <android.support.v4.view.ViewPager
+        <com.oliver.news.fragment.InterceptViewPager
             android:id="@+id/vp_tpi_page_detail_lunbo"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        </android.support.v4.view.ViewPager>
+        </com.oliver.news.fragment.InterceptViewPager>
 
         <!--图片描述 和 点的容器-->
         <RelativeLayout
