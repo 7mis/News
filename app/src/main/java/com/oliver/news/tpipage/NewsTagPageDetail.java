@@ -2,6 +2,7 @@ package com.oliver.news.tpipage;
 
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -23,6 +24,8 @@ import com.oliver.news.activity.HomeActivity;
 import com.oliver.news.domain.NewsCenterData_GosnFormat;
 import com.oliver.news.domain.NewsvCenterDetailData;
 import com.oliver.news.utils.L;
+import com.oliver.news.utils.MyConstaints;
+import com.oliver.news.utils.SPUtils;
 
 import java.util.List;
 
@@ -75,6 +78,16 @@ public class NewsTagPageDetail {
 
         String newsDetailUrl = mContext.getResources().getString(R.string.baseurl) + mChildrenBean.getUrl();
 
+
+        /**本地缓存*/
+        String locaJson = SPUtils.getString(mContext, MyConstaints.LUNBOANDLISTNEWS, null);
+        if (!TextUtils.isEmpty(locaJson)) {
+            /**有缓存数据，解析处理*/
+            NewsvCenterDetailData detailData = parseJsonData(locaJson);
+            processData(detailData);
+
+
+        }
         getDataFromeNet(newsDetailUrl);
     }
 
@@ -92,6 +105,10 @@ public class NewsTagPageDetail {
 
                 /**1. 获取 json 数据*/
                 String jsonDataStr = responseInfo.result;
+
+                /**本地缓存*/
+                SPUtils.putString(mContext, MyConstaints.LUNBOANDLISTNEWS, jsonDataStr);
+
                 /**2. 解析 json 数据*/
                 NewsvCenterDetailData newsvCenterDetailData = parseJsonData(jsonDataStr);
                 /**3. 处理 json 数据*/
