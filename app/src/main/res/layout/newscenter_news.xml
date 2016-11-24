@@ -15,7 +15,9 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <com.viewpagerindicator.TabPageIndicator
+            <!--<com.viewpagerindicator.TabPageIndicator-->
+            <com.oliver.news.fragment.InterceptTabPageIndicator
+
                 android:id="@+id/tpi_newspage_pagetag"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
