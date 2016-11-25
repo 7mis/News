@@ -26,6 +26,7 @@ import com.oliver.news.R;
 import com.oliver.news.activity.HomeActivity;
 import com.oliver.news.domain.NewsCenterData_GosnFormat;
 import com.oliver.news.domain.NewsvCenterDetailData;
+import com.oliver.news.fragment.RefreshListView;
 import com.oliver.news.utils.DensityUtils;
 import com.oliver.news.utils.L;
 import com.oliver.news.utils.MyConstaints;
@@ -55,7 +56,7 @@ public class NewsTagPageDetail {
     private LinearLayout ll_point;
 
     @ViewInject(R.id.lv_tpi_page_detail_newsdata)
-    private ListView lv_newsdata;
+    private RefreshListView lv_newsdata;
 
     private List<NewsvCenterDetailData.DataBean.TopnewsBean> topNews;
     private ViewPagerAdapter vpAdapter;

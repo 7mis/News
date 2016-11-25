@@ -25,16 +25,16 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_listview_foot_state_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="22sp"
-            android:textColor="#ff0000"
-            android:layout_gravity="center"
-            android:text="加载更多" />
-
     </LinearLayout>
+
+    <TextView
+        android:layout_gravity="center_vertical"
+        android:id="@+id/tv_listview_foot_state_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:textColor="#ff0000"
+        android:text="加载更多" />
 
 
 </LinearLayout>
