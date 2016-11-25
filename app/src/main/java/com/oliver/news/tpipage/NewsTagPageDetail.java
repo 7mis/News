@@ -58,6 +58,7 @@ public class NewsTagPageDetail {
     private List<NewsvCenterDetailData.DataBean.TopnewsBean> topNews;
     private ViewPagerAdapter vpAdapter;
     private final BitmapUtils bitmapUtils;
+    private MyHandler mHandler;
 
 
     public NewsTagPageDetail(HomeActivity context, NewsCenterData_GosnFormat.DataBean.ChildrenBean childrenBean) {
@@ -72,9 +73,6 @@ public class NewsTagPageDetail {
         initData();
         initEvent();
     }
-
-
-    private Handler mHandler;
 
 
     /**
@@ -183,31 +181,70 @@ public class NewsTagPageDetail {
     }
 
     private void startLunbo() {
-        /**可能执行多次*/
-        if (mHandler == null) {
-            mHandler = new Handler();
-        }
+        if (mHandler == null)
+            mHandler = new MyHandler();
+        mHandler.startLunbo();
 
-        /**每次调用时，回收*/
-        mHandler.removeCallbacksAndMessages(null);
-
-        /**发消息*/
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //功能
-                //主线程
-                L.d("自动轮播 - 当前条目 " + vp_lunbo.getCurrentItem());
-                L.d("自动轮播 - 求余条目 " + (vp_lunbo.getCurrentItem() + 1) % vp_lunbo.getAdapter().getCount());
-                vp_lunbo.setCurrentItem((vp_lunbo.getCurrentItem() + 1) % vp_lunbo.getAdapter().getCount());
-
-                /**连续执行*/
-                mHandler.postDelayed(this, 2000);
-
-            }
-        }, 2000);//两秒 发一个消息
 
     }
+
+
+    private class MyHandler extends Handler implements Runnable {
+        @Override
+        public void run() {
+            vp_lunbo.setCurrentItem((vp_lunbo.getCurrentItem() + 1) % vp_lunbo.getAdapter().getCount());
+
+            /**连续执行*/
+            postDelayed(this, 2000);
+        }
+
+        /**
+         * 开始轮播
+         */
+        public void startLunbo() {
+            stopLunbo();//停止轮播
+            postDelayed(this, 2000);
+
+        }
+
+        /**
+         * 结束轮播
+         * 清空所有消息
+         */
+        public void stopLunbo() {
+            mHandler.removeCallbacksAndMessages(null);
+
+        }
+
+    }
+
+//    private void startLunbo() {
+//
+//        /**可能执行多次*/
+//        if (mHandler == null) {
+//            mHandler = new Handler();
+//        }
+//
+//        /**每次调用时，回收*/
+//        mHandler.removeCallbacksAndMessages(null);
+//
+//        /**发消息*/
+//        mHandler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                //功能
+//                //主线程
+//                L.d("自动轮播 - 当前条目 " + vp_lunbo.getCurrentItem());
+//                L.d("自动轮播 - 求余条目 " + (vp_lunbo.getCurrentItem() + 1) % vp_lunbo.getAdapter().getCount());
+//                vp_lunbo.setCurrentItem((vp_lunbo.getCurrentItem() + 1) % vp_lunbo.getAdapter().getCount());
+//
+//                /**连续执行*/
+//                mHandler.postDelayed(this, 2000);
+//
+//            }
+//        }, 2000);//两秒 发一个消息
+//
+//    }
 
     /**
      * 设置点可选+文字描述信息
