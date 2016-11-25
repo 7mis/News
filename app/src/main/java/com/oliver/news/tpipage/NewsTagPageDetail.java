@@ -69,6 +69,33 @@ public class NewsTagPageDetail {
 
         initView();
         initData();
+        initEvent();
+    }
+
+    /**
+     * 轮播图的page change 事件
+     */
+    private void initEvent() {
+        vp_lunbo.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                /*页面停止改变
+                * 选中那个位置 设置当前页面信息
+                */
+                setPointEnableAndPicDes(position);
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     /**
@@ -141,7 +168,30 @@ public class NewsTagPageDetail {
         initPoints();
 
 
+        /**设置点可选+文字描述信息*/
+        setPointEnableAndPicDes(0);
 
+
+    }
+
+    /**
+     * 设置点可选+文字描述信息
+     *
+     * @param lunboIndex 默认第一个图片
+     */
+    private void setPointEnableAndPicDes(int lunboIndex) {
+        /*1. 文字的描述*/
+        tv_desc.setText(topNews.get(lunboIndex).getTitle());
+        /*2. 选中点 可用状态的设置*/
+        for (int i = 0; i < topNews.size(); i++) {
+            /**取出 View*/
+            View v = ll_point.getChildAt(i);
+
+
+            /*是否可用*/
+            v.setEnabled(i == lunboIndex);
+
+        }
 
     }
 
