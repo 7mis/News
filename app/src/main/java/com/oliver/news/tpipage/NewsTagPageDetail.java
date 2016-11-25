@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -59,6 +60,9 @@ public class NewsTagPageDetail {
     private ViewPagerAdapter vpAdapter;
     private final BitmapUtils bitmapUtils;
     private MyHandler mHandler;
+    private float downX;
+    private float downY;
+    private long downTime;
 
 
     public NewsTagPageDetail(HomeActivity context, NewsCenterData_GosnFormat.DataBean.ChildrenBean childrenBean) {
@@ -315,6 +319,51 @@ public class NewsTagPageDetail {
             ImageView iv = new ImageView(mContext);
             iv.setScaleType(ImageView.ScaleType.FIT_XY);
 
+            /**给图片添加触摸事件*/
+            iv.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN://按下
+
+                            downX = event.getX();
+                            downY = event.getY();
+                            downTime = System.currentTimeMillis();
+                            /**停止轮播*/
+                            mHandler.stopLunbo();
+
+                            break;
+                        case MotionEvent.ACTION_UP://松开
+                            float upX = event.getX();
+                            float upY = event.getY();
+                            if (Math.abs(upX - downX) < 5 && Math.abs(upY - downY) < 5) {
+                                /**同一点松开*/
+                                long upTime = System.currentTimeMillis();
+                                if (upTime - downTime < 500) {
+                                    //轮播图片的单击事件
+                                    lunboPicclicked();
+                                }
+
+                            }
+
+                            /**继续轮播*/
+                            mHandler.startLunbo();
+
+                            break;
+
+                        case MotionEvent.ACTION_CANCEL://取消点击
+                            mHandler.startLunbo();
+                            break;
+                        default:
+                            break;
+
+                    }
+                    return true;//自己处理事件
+                }
+            });
+
+
             /**数据*/
             NewsvCenterDetailData.DataBean.TopnewsBean topNewsBean = topNews.get(position);
             String picUrl = topNewsBean.getTopimage();
@@ -329,6 +378,13 @@ public class NewsTagPageDetail {
             container.addView(iv);
 
             return iv;
+        }
+
+        /**
+         * 完成此方法 实现图片的单击事件
+         */
+        private void lunboPicclicked() {
+            L.d("轮播图片单击");
         }
 
         @Override
