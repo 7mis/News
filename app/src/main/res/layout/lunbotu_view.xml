@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--轮播图-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="175dip">
+
+    <!--ViewPager-->
+    <com.oliver.news.fragment.InterceptViewPager
+        android:id="@+id/vp_tpi_page_detail_lunbo"
+        android:layout_width="match_parent"
+        android:layout_height="175dip">
+
+    </com.oliver.news.fragment.InterceptViewPager>
+
+    <!--图片描述 和 点的容器-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#33000000">
+
+        <!--描述信息-->
+        <TextView
+            android:id="@+id/tv_tpi_page_detail_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:text="图片 1 的描述"
+            android:textColor="#ffffff" />
+        <!--点的容器-->
+        <LinearLayout
+            android:id="@+id/ll_tpi_page_detail_points"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dip"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="5dip"
+                android:layout_height="5dip"
+                android:background="@drawable/dot_focus">
+
+            </View>
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>
+
+

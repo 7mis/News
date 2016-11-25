@@ -66,6 +66,7 @@ public class NewsTagPageDetail {
     private long downTime;
     private List<NewsvCenterDetailData.DataBean.NewsBean> mListNews;
     private LvAdapter mLvAdapter;
+    private View lunboRootView;
 
 
     public NewsTagPageDetail(HomeActivity context, NewsCenterData_GosnFormat.DataBean.ChildrenBean childrenBean) {
@@ -534,7 +535,13 @@ public class NewsTagPageDetail {
 
         rootView = View.inflate(mContext, R.layout.tpi_page_detail, null);
 
+        lunboRootView = View.inflate(mContext, R.layout.lunbotu_view, null);
+
+        ViewUtils.inject(this, lunboRootView);
+
         ViewUtils.inject(this, rootView);
+
+        lv_newsdata.addHeaderView(lunboRootView);
     }
 
 

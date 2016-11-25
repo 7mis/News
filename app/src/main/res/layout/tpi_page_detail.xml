@@ -4,12 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--轮播图-->
+    <!--&lt;!&ndash;轮播图&ndash;&gt;
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="175dip">
 
-        <!--ViewPager-->
+        &lt;!&ndash;ViewPager&ndash;&gt;
         <com.oliver.news.fragment.InterceptViewPager
             android:id="@+id/vp_tpi_page_detail_lunbo"
             android:layout_width="match_parent"
@@ -17,14 +17,14 @@
 
         </com.oliver.news.fragment.InterceptViewPager>
 
-        <!--图片描述 和 点的容器-->
+        &lt;!&ndash;图片描述 和 点的容器&ndash;&gt;
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="#33000000">
 
-            <!--描述信息-->
+            &lt;!&ndash;描述信息&ndash;&gt;
             <TextView
                 android:id="@+id/tv_tpi_page_detail_desc"
                 android:layout_width="wrap_content"
@@ -32,7 +32,7 @@
                 android:layout_marginLeft="10dip"
                 android:text="图片 1 的描述"
                 android:textColor="#ffffff" />
-            <!--点的容器-->
+            &lt;!&ndash;点的容器&ndash;&gt;
             <LinearLayout
                 android:id="@+id/ll_tpi_page_detail_points"
                 android:layout_width="wrap_content"
@@ -55,7 +55,7 @@
         </RelativeLayout>
 
     </RelativeLayout>
-
+-->
     <!--ListView 新闻-->
     <ListView
         android:id="@+id/lv_tpi_page_detail_newsdata"
