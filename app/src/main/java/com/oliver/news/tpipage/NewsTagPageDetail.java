@@ -186,6 +186,7 @@ public class NewsTagPageDetail {
 
         /**设置列表新闻数据*/
         mListNews = newsvCenterDetailData.getData().getNews();
+        setListNewsData();
 
 
     }
@@ -343,11 +344,53 @@ public class NewsTagPageDetail {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             /**数据的显示*/
+            ViewHolder mViewHolder = null;
+            if (convertView == null) {
+                convertView = View.inflate(mContext, R.layout.item_listnews, null);
+
+                mViewHolder = new ViewHolder();
+                /**图片*/
+                mViewHolder.iv_icon = (ImageView) convertView.findViewById(R.id.iv_item_listnews_pic);
+                /**标题*/
+                mViewHolder.tv_title = (TextView) convertView.findViewById(R.id.tv_item_listnews_title);
+                /**时间*/
+                mViewHolder.tv_time = (TextView) convertView.findViewById(R.id.tv_item_listnews_time);
+                /**菜单*/
+                mViewHolder.iv_menu = (ImageView) convertView.findViewById(R.id.iv_item_listnews_menu);
 
 
-            return null;
+                convertView.setTag(mViewHolder);
+
+            } else {
+                mViewHolder = (ViewHolder) convertView.getTag();
+
+            }
+
+            /**获取数据 赋值*/
+            NewsvCenterDetailData.DataBean.NewsBean newsBean = mListNews.get(position);
+            /**设置 图片*/
+            bitmapUtils.display(mViewHolder.iv_icon, newsBean.getListimage());
+            /**设置 标题*/
+            mViewHolder.tv_title.setText(newsBean.getTitle());
+            /**设置 时间*/
+            mViewHolder.tv_time.setText(newsBean.getPubdate());
+            /**设置 菜单*/
+
+
+            return convertView;
         }
     }
+
+    /**
+     * 复用
+     */
+    private class ViewHolder {
+        ImageView iv_icon;
+        TextView tv_title;
+        TextView tv_time;
+        ImageView iv_menu;
+    }
+
 
     private void setLunBoData() {
         if (vpAdapter == null) {
