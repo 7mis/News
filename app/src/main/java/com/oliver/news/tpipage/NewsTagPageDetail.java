@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -63,6 +64,8 @@ public class NewsTagPageDetail {
     private float downX;
     private float downY;
     private long downTime;
+    private List<NewsvCenterDetailData.DataBean.NewsBean> mListNews;
+    private LvAdapter mLvAdapter;
 
 
     public NewsTagPageDetail(HomeActivity context, NewsCenterData_GosnFormat.DataBean.ChildrenBean childrenBean) {
@@ -181,6 +184,9 @@ public class NewsTagPageDetail {
         /**自动轮播*/
         startLunbo();
 
+        /**设置列表新闻数据*/
+        mListNews = newsvCenterDetailData.getData().getNews();
+
 
     }
 
@@ -295,6 +301,52 @@ public class NewsTagPageDetail {
 
         }
 
+    }
+
+    /**
+     * ListView 的适配器
+     */
+    private void setListNewsData() {
+        if (mLvAdapter == null) {
+            mLvAdapter = new LvAdapter();
+            lv_newsdata.setAdapter(mLvAdapter);
+
+        } else {
+            mLvAdapter.notifyDataSetChanged();
+
+        }
+    }
+
+
+    /**
+     * ListView 的 adapter
+     */
+    private class LvAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            if (lv_newsdata != null)
+                return mListNews.size();
+            return 0;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            /**数据的显示*/
+
+
+            return null;
+        }
     }
 
     private void setLunBoData() {
