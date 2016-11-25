@@ -1,5 +1,6 @@
 package com.oliver.news.tpipage;
 
+import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
@@ -71,6 +72,10 @@ public class NewsTagPageDetail {
         initData();
         initEvent();
     }
+
+
+    private Handler mHandler;
+
 
     /**
      * 轮播图的page change 事件
@@ -171,6 +176,36 @@ public class NewsTagPageDetail {
         /**设置点可选+文字描述信息*/
         setPointEnableAndPicDes(0);
 
+        /**自动轮播*/
+        startLunbo();
+
+
+    }
+
+    private void startLunbo() {
+        /**可能执行多次*/
+        if (mHandler == null) {
+            mHandler = new Handler();
+        }
+
+        /**每次调用时，回收*/
+        mHandler.removeCallbacksAndMessages(null);
+
+        /**发消息*/
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //功能
+                //主线程
+                L.d("自动轮播 - 当前条目 " + vp_lunbo.getCurrentItem());
+                L.d("自动轮播 - 求余条目 " + (vp_lunbo.getCurrentItem() + 1) % vp_lunbo.getAdapter().getCount());
+                vp_lunbo.setCurrentItem((vp_lunbo.getCurrentItem() + 1) % vp_lunbo.getAdapter().getCount());
+
+                /**连续执行*/
+                mHandler.postDelayed(this, 2000);
+
+            }
+        }, 2000);//两秒 发一个消息
 
     }
 
