@@ -32,6 +32,7 @@ import com.oliver.news.utils.DensityUtils;
 import com.oliver.news.utils.L;
 import com.oliver.news.utils.MyConstaints;
 import com.oliver.news.utils.SPUtils;
+import com.oliver.news.utils.T;
 
 import java.util.List;
 
@@ -69,6 +70,9 @@ public class NewsTagPageDetail {
     private List<NewsvCenterDetailData.DataBean.NewsBean> mListNews;
     private LvAdapter mLvAdapter;
     private View lunboRootView;
+    private String newsDetailUrl;
+
+    private boolean isRefresh = false;
 
 
     public NewsTagPageDetail(HomeActivity context, NewsCenterData_GosnFormat.DataBean.ChildrenBean childrenBean) {
@@ -91,24 +95,31 @@ public class NewsTagPageDetail {
     private void initEvent() {
 
 
+        /**RefreshView 添加数据监听事件
+         * 1. 下拉刷新
+         * 2. 上拉加载更多*/
         lv_newsdata.setOnRefreshDataListener(new RefreshListView.OnRefreshDataListener() {
             @Override
             public void freshData() {
-                /*更新数据*/
-                new Thread(){
-                    @Override
-                    public void run() {
-                        SystemClock.sleep(2000);
-                        /**更新状态*/
-                        mContext.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                /**更新状态*/
-                                lv_newsdata.updateRefreshState();
-                            }
-                        });
-                    }
-                }.start();
+
+                isRefresh = true;
+                getDataFromeNet(newsDetailUrl);
+
+//                /*更新数据*/
+//                new Thread(){
+//                    @Override
+//                    public void run() {
+//                        SystemClock.sleep(2000);
+//                        /**更新状态*/
+//                        mContext.runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                /**更新状态*/
+//                                lv_newsdata.updateRefreshState();
+//                            }
+//                        });
+//                    }
+//                }.start();
             }
         });
 
@@ -141,7 +152,7 @@ public class NewsTagPageDetail {
     private void initData() {
         /**网络获取数据*/
 
-        String newsDetailUrl = mContext.getResources().getString(R.string.baseurl) + mChildrenBean.getUrl();
+        newsDetailUrl = mContext.getResources().getString(R.string.baseurl) + mChildrenBean.getUrl();
 
 
         /**本地缓存*/
@@ -179,11 +190,20 @@ public class NewsTagPageDetail {
                 /**3. 处理 json 数据*/
                 processData(newsvCenterDetailData);
 
+                /**检测是否是刷新数据*/
+                if (isRefresh) {
+                    T.showShort(mContext,"刷新数据成功");
+
+                    isRefresh = false;
+                    /**刷新数据成功 更新状态*/
+                    lv_newsdata.updateRefreshState();
+                }
+
             }
 
             @Override
             public void onFailure(HttpException error, String msg) {
-                L.d("网络请求数据成功 - detail");
+                L.d("网络请求数据失败 - detail");
 
             }
         });
