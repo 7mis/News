@@ -1,6 +1,7 @@
 package com.oliver.news.tpipage;
 
 import android.os.Handler;
+import android.os.SystemClock;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
@@ -88,6 +89,30 @@ public class NewsTagPageDetail {
      * 轮播图的page change 事件
      */
     private void initEvent() {
+
+
+        lv_newsdata.setOnRefreshDataListener(new RefreshListView.OnRefreshDataListener() {
+            @Override
+            public void freshData() {
+                /*更新数据*/
+                new Thread(){
+                    @Override
+                    public void run() {
+                        SystemClock.sleep(2000);
+                        /**更新状态*/
+                        mContext.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                /**更新状态*/
+                                lv_newsdata.updateRefreshState();
+                            }
+                        });
+                    }
+                }.start();
+            }
+        });
+
+
         vp_lunbo.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -225,7 +250,7 @@ public class NewsTagPageDetail {
          * 清空所有消息
          */
         public void stopLunbo() {
-            mHandler.removeCallbacksAndMessages(null);
+            removeCallbacksAndMessages(null);
 
         }
 

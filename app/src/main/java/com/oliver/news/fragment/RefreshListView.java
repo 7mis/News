@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * @desc
+ * @desc 只显示界面
  * @auther Oliver
  * @time 2016/11/25 16:58
  */
@@ -151,6 +151,9 @@ public class RefreshListView extends ListView {
         return super.onTouchEvent(ev);//原生事件
     }
 
+    /**
+     * 更新刷新数据的状态
+     */
     public void updateRefreshState() {
         /**改变状态 下拉刷新*/
         reFreshState = PULLDOWN_STATE;
@@ -180,6 +183,11 @@ public class RefreshListView extends ListView {
         ra_down.setDuration(500);
         ra_down.setFillAfter(true);//动画结束的位置
     }
+
+
+    /**
+     * 刷新数据状态的回调
+     */
     private OnRefreshDataListener mOnRefreshDataListener;
 
     public void setOnRefreshDataListener(OnRefreshDataListener listener) {
@@ -189,8 +197,6 @@ public class RefreshListView extends ListView {
     public interface OnRefreshDataListener {
         void freshData();
     }
-
-
 
 
     /**
@@ -239,10 +245,6 @@ public class RefreshListView extends ListView {
     }
 
 
-
-
-
-
     /**
      * 加载轮播图
      *
@@ -252,9 +254,6 @@ public class RefreshListView extends ListView {
         m_lunbo = v_lunbo;
         headRoot.addView(v_lunbo);
     }
-
-
-
 
 
     /**
@@ -310,9 +309,6 @@ public class RefreshListView extends ListView {
     }
 
 
-
-
-
     /**
      * 初始化 foot
      */
@@ -327,7 +323,6 @@ public class RefreshListView extends ListView {
 
 
     }
-
 
 
     public RefreshListView(Context context) {
