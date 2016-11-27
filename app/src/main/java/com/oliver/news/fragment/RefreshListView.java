@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -44,6 +45,8 @@ public class RefreshListView extends ListView {
     private RotateAnimation ra_up;
     private RotateAnimation ra_down;
 
+    private boolean isLoadingMore = false;//是否在加载更多数据
+
 
     public RefreshListView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -56,7 +59,51 @@ public class RefreshListView extends ListView {
         /**3. 初始化动画*/
         initAnimation();
 
+        /**初始化事件*/
+        initEvent();
 
+    }
+
+    /**
+     * ListView 添加滑动事件
+     */
+    private void initEvent() {
+        this.setOnScrollListener(new OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                /**监听是否滑动到最后一条数据*/
+                L.d("ListView 状态改变");
+                //静止状态
+                if (scrollState == OnScrollListener.SCROLL_STATE_IDLE) {
+                    //是否滑动到最后一条数据
+                    L.d("最后可视的位置 - " + getLastVisiblePosition() + "<>" + getAdapter().getCount());
+                    if (getLastVisiblePosition() == getAdapter().getCount() - 1 && !isLoadingMore) {
+                        /**加载更多*/
+                        L.d("上拉加载更多");
+
+                        /**界面显示*/
+                        viewFoot.setPadding(0, 0, 0, 0);
+
+
+                        /**设置加载更多数据界面显示*/
+                        setSelection(getAdapter().getCount());
+
+                        if (mOnRefreshDataListener != null) {
+                            mOnRefreshDataListener.loadMore();
+                        }
+
+                        isLoadingMore = true;
+                    }
+
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                /**高灵敏度*/
+
+            }
+        });
     }
 
     /**
@@ -152,6 +199,23 @@ public class RefreshListView extends ListView {
     }
 
     /**
+     * 加载更多 更新状态
+     */
+    public void updataState() {
+        if (isLoadingMore) {
+            /**加载更多*/
+            viewFoot.setPadding(0, -mViewFootHeight, 0, 0);
+            isLoadingMore = false;//防止继续做下拉刷新
+        } else {
+            /**下拉刷新*/
+            updateRefreshState();
+        }
+
+
+    }
+
+
+    /**
      * 更新刷新数据的状态
      */
     public void updateRefreshState() {
@@ -195,7 +259,18 @@ public class RefreshListView extends ListView {
     }
 
     public interface OnRefreshDataListener {
+        /**
+         * 刷新数据
+         */
         void freshData();
+
+        /**
+         * 加载更多
+         */
+
+        void loadMore();
+
+
     }
 
 

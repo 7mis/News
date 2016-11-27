@@ -121,6 +121,29 @@ public class NewsTagPageDetail {
 //                    }
 //                }.start();
             }
+
+            /**
+             * 加载更多的数据回调
+             */
+            @Override
+            public void loadMore() {
+                L.d("加载更多数据的回调");
+                /*更新数据*/
+                new Thread(){
+                    @Override
+                    public void run() {
+                        SystemClock.sleep(2000);
+                        /**更新状态*/
+                        mContext.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                /**更新状态*/
+                                lv_newsdata.updataState();
+                            }
+                        });
+                    }
+                }.start();
+            }
         });
 
 
@@ -196,7 +219,7 @@ public class NewsTagPageDetail {
 
                     isRefresh = false;
                     /**刷新数据成功 更新状态*/
-                    lv_newsdata.updateRefreshState();
+                    lv_newsdata.updataState();
                 }
 
             }
