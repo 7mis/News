@@ -542,7 +542,7 @@ public class NewsTagPageDetail {
 
         ViewUtils.inject(this, rootView);
 
-        lv_newsdata.addHeaderView(lunboRootView);
+        lv_newsdata.addLunbo(lunboRootView);
     }
 
 
