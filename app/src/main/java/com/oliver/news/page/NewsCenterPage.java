@@ -185,6 +185,27 @@ public class NewsCenterPage extends BasePage {
 
         //加载
         BaseNewsCenterPage baseNewsCenterPage = mBaseNewsCenterPages.get(index);
+
+        /**判断 page 的类型
+         * 1. 组图页面显示按钮
+         */
+        if (baseNewsCenterPage instanceof PhotoPage_NewsCenter) {
+            iv_showListOrGrid.setVisibility(View.VISIBLE);
+
+            /**设置标记：
+             * 1. setTag 属于 View 类的方法
+             * 2. 把页面 设置成一个 tag 标记
+             * 3. 点击时就有这个页面了，显示才可以点击
+             *
+             */
+            iv_showListOrGrid.setTag(baseNewsCenterPage);
+
+
+
+        } else {
+            iv_showListOrGrid.setVisibility(View.GONE);
+        }
+
         View view = baseNewsCenterPage.getRootView();
 
         /**初始化数据*/

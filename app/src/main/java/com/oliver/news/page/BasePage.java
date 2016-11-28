@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.oliver.news.R;
 import com.oliver.news.activity.HomeActivity;
+import com.oliver.news.newscenterpage.PhotoPage_NewsCenter;
 import com.oliver.news.utils.L;
 
 /**
@@ -24,6 +25,7 @@ public class BasePage {
     protected TextView tv_title;
     protected ImageView iv_menu;
     protected FrameLayout fl_content;
+    protected ImageView iv_showListOrGrid;
 
 
     /**
@@ -43,6 +45,9 @@ public class BasePage {
         tv_title = (TextView) rootView.findViewById(R.id.tv_basepage_title);
         iv_menu = (ImageView) rootView.findViewById(R.id.iv_basepage_menu);
         fl_content = (FrameLayout) rootView.findViewById(R.id.fl_basepage_content);
+
+        iv_showListOrGrid = (ImageView) rootView.findViewById(R.id.iv_basepage_gridlistbutton);
+
 
 
     }
@@ -74,6 +79,21 @@ public class BasePage {
      * 控制左侧菜单的关闭
      */
     public void initEvent() {
+        iv_showListOrGrid.setOnClickListener(new View.OnClickListener() {
+            /**
+             * @param v 谁触发这个事件，传递谁的 View
+             *          通过 tag 获取这个页面
+             */
+            @Override
+            public void onClick(View v) {
+                //只调用一次
+                //photoView 完成 ListView 和 GridView 的切换
+                PhotoPage_NewsCenter photoPage = (PhotoPage_NewsCenter) v.getTag();
+                photoPage.swtichListOrGrid((ImageView) v);//切换 View 显示
+
+            }
+        });
+
         iv_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

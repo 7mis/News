@@ -108,6 +108,33 @@ public class PhotoPage_NewsCenter extends BaseNewsCenterPage {
 
     }
 
+    private boolean isShowList = true;//默认显示 ListView
+
+    /**
+     * 完成 ListView 和 GridView 切换
+     * @param v 按钮
+     */
+    public void swtichListOrGrid(ImageView v) {
+        isShowList = !isShowList;
+        if (isShowList) {
+            /**显示ListView*/
+            lv_showData.setVisibility(View.VISIBLE);
+            gv_showData.setVisibility(View.GONE);
+
+            /**改变 v 的src*/
+        v.setImageResource(R.drawable.icon_pic_grid_type);
+
+        } else {
+            /**显示GridView*/
+            lv_showData.setVisibility(View.GONE);
+            gv_showData.setVisibility(View.VISIBLE);
+
+            v.setImageResource(R.drawable.icon_pic_list_type);
+
+        }
+
+    }
+
     private class MyAdapter extends BaseAdapter {
         @Override
         public int getCount() {
