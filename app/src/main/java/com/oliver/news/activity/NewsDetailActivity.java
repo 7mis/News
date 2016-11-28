@@ -1,14 +1,15 @@
 package com.oliver.news.activity;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.oliver.news.R;
+import com.oliver.news.utils.MyConstaints;
 
 /**
  * @desc 新闻显示界面
@@ -21,14 +22,50 @@ public class NewsDetailActivity extends AppCompatActivity {
     private ImageView iv_textSize;
     private ImageView iv_share;
     private WebView wv_news;
-    private ProgressBar pv_news;
+    private ProgressBar pb_loading;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initView();
+
+        initData();
+        initEvent();
     }
 
+    /**
+     * 数据
+     */
+    private void initData() {
+        String newsUrl = getIntent().getStringExtra(MyConstaints.NEWSDETAILURL);
+
+        /*webview*/
+        wv_news.loadUrl(newsUrl);//加载 url 对应的页面数据
+
+
+    }
+
+    /**
+     * 事件
+     */
+    private void initEvent() {
+        /**监听数据加载完成的事件*/
+        wv_news.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                /**页面加载数据完成的回调*/
+                /**隐藏进度条*/
+                pb_loading.setVisibility(View.GONE);
+
+                super.onPageFinished(view, url);
+            }
+        });
+
+    }
+
+    /**
+     * 界面
+     */
     private void initView() {
         setContentView(R.layout.activity_news_detail);
 
@@ -52,7 +89,7 @@ public class NewsDetailActivity extends AppCompatActivity {
         wv_news = (WebView) findViewById(R.id.wv_newsdetail);
 
         /*progressbar*/
-        pv_news = (ProgressBar) findViewById(R.id.pb_newsdetail);
+        pb_loading = (ProgressBar) findViewById(R.id.pb_newsdetail);
 
     }
 }
