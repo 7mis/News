@@ -30,4 +30,19 @@ dependencies {
     compile 'com.jiechic.library:xUtils:2.6.14'
     compile 'com.google.code.gson:gson:2.8.0'
     compile project(':viewpagerindicator_library')
+    compile files('libs/MobCommons-2016.1107.1809.jar')
+    compile files('libs/MobTools-2016.1107.1809.jar')
+    compile files('libs/ShareSDK-Core-2.7.10.jar')
+    compile files('libs/ShareSDK-Email-2.7.10.jar')
+    compile files('libs/ShareSDK-Facebook-2.7.10.jar')
+    compile files('libs/ShareSDK-QQ-2.7.10.jar')
+    compile files('libs/ShareSDK-QZone-2.7.10.jar')
+    compile files('libs/ShareSDK-ShortMessage-2.7.10.jar')
+    compile files('libs/ShareSDK-SinaWeibo-2.7.10.jar')
+    compile files('libs/ShareSDK-TencentWeibo-2.7.10.jar')
+    compile files('libs/ShareSDK-Twitter-2.7.10.jar')
+    compile files('libs/ShareSDK-Wechat-2.7.10.jar')
+    compile files('libs/ShareSDK-Wechat-Core-2.7.10.jar')
+    compile files('libs/ShareSDK-Wechat-Favorite-2.7.10.jar')
+    compile files('libs/ShareSDK-Wechat-Moments-2.7.10.jar')
 }
