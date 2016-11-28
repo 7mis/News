@@ -1,8 +1,12 @@
 package com.oliver.news.activity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
@@ -23,6 +27,10 @@ public class NewsDetailActivity extends AppCompatActivity {
     private ImageView iv_share;
     private WebView wv_news;
     private ProgressBar pb_loading;
+
+    private int textSizeIndex = 2;
+    private Dialog dialog;
+    private WebSettings webSettings;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,6 +69,83 @@ public class NewsDetailActivity extends AppCompatActivity {
             }
         });
 
+
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.iv_basepage_arrow:
+                        // 返回
+                        finish();
+                        break;
+                    case R.id.iv_basepage_share:
+                        share();// 分享
+                        break;
+
+                    case R.id.iv_basepage_textsize:
+                        showTextSizeDialog();// 修改字体大小
+                        break;
+                    default:
+                        break;
+                }
+            }
+        };
+
+        // 设置三个按钮的事件
+        iv_back.setOnClickListener(listener);
+        iv_share.setOnClickListener(listener);
+        iv_textSize.setOnClickListener(listener);
+
+    }
+
+    private void showTextSizeDialog() {
+        AlertDialog.Builder ab = new AlertDialog.Builder(this);
+        ab.setTitle("字体大小");
+        ab.setSingleChoiceItems(new String[] { "最小", "较小", "正常", "较大", "最大" },
+                textSizeIndex, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        textSizeIndex = which;
+                        textSize(textSizeIndex + 1);
+                        dialog.dismiss();
+                    }
+                });
+        dialog = ab.create();
+        dialog.show();
+    }
+
+    private static final int LARGEST = 5;// 字体最大
+    private static final int LARGER = 4;// 字体最大
+    private static final int NORMAL = 3;// 字体最大
+    private static final int SMALLER = 2;// 字体最大
+    private static final int SMALLEST = 1;// 字体最大
+
+    private void textSize(int index) {
+        switch (index) {
+            case LARGEST:
+                webSettings.setTextSize(WebSettings.TextSize.LARGEST);
+                break;
+            case LARGER:
+                webSettings.setTextSize(WebSettings.TextSize.LARGER);
+                break;
+            case NORMAL:
+                webSettings.setTextSize(WebSettings.TextSize.NORMAL);
+                break;
+            case SMALLER:
+                webSettings.setTextSize(WebSettings.TextSize.SMALLER);
+                break;
+            case SMALLEST:
+                webSettings.setTextSize(WebSettings.TextSize.SMALLEST);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private void share() {
+
     }
 
     /**
@@ -87,6 +172,18 @@ public class NewsDetailActivity extends AppCompatActivity {
 
         /*webview*/
         wv_news = (WebView) findViewById(R.id.wv_newsdetail);
+
+        // 设置WebView的参数
+        webSettings = wv_news.getSettings();
+
+        // 设置可以运行js
+        webSettings.setJavaScriptEnabled(true);
+
+        // 设置缩放按钮
+        webSettings.setBuiltInZoomControls(true);
+
+        // 双击放大或缩小
+        webSettings.setUseWideViewPort(true);
 
         /*progressbar*/
         pb_loading = (ProgressBar) findViewById(R.id.pb_newsdetail);
