@@ -1,5 +1,6 @@
 package com.oliver.news.tpipage;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -7,6 +8,7 @@ import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,6 +25,7 @@ import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.oliver.news.R;
 import com.oliver.news.activity.HomeActivity;
+import com.oliver.news.activity.NewsDetailActivity;
 import com.oliver.news.domain.NewsCenterData_GosnFormat;
 import com.oliver.news.domain.NewsvCenterDetailData;
 import com.oliver.news.fragment.RefreshListView;
@@ -95,6 +98,31 @@ public class NewsTagPageDetail {
      */
     private void initEvent() {
 
+        /**ListView 添加 item 点击事件*/
+        lv_newsdata.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                /**点击新闻*/
+
+                /*获取当前点击的数据*/
+                L.d("点击的 item 位置 - " + position);
+                NewsvCenterDetailData.DataBean.NewsBean news = mListNews.get(position - 1);
+                /*传递新闻的 url*/
+                String newsUrl = news.getUrl();
+
+                /**点打开新闻*/
+                Intent intent = new Intent(mContext, NewsDetailActivity.class);
+                intent.putExtra(MyConstaints.NEWSDETAILURL, newsUrl);
+                mContext.startActivity(intent);
+
+
+
+
+
+
+            }
+        });
+
 
         /**RefreshView 添加数据监听事件
          * 1. 下拉刷新
@@ -104,7 +132,7 @@ public class NewsTagPageDetail {
             public void freshData() {
 
                 isRefresh = true;
-                getDataFromeNet(newsDetailUrl,false);
+                getDataFromeNet(newsDetailUrl, false);
 
 //                /*更新数据*/
 //                new Thread(){
@@ -133,16 +161,15 @@ public class NewsTagPageDetail {
                 /**获取更多的数据*/
                 if (!TextUtils.isEmpty(moreUrl)) {
                     /**有更多数据*/
-                    getDataFromeNet(moreUrl,true);
+                    getDataFromeNet(moreUrl, true);
 
                 } else {
                     //没有更多数据
-                    T.showShort(mContext,"没有更多数据");
+                    T.showShort(mContext, "没有更多数据");
 
                     //更新状态
                     lv_newsdata.updataState();
                 }
-
 
 
             }
@@ -189,7 +216,7 @@ public class NewsTagPageDetail {
 
 
         }
-        getDataFromeNet(newsDetailUrl,false);//false 不是加载更多的数据
+        getDataFromeNet(newsDetailUrl, false);//false 不是加载更多的数据
     }
 
     /**
@@ -224,7 +251,7 @@ public class NewsTagPageDetail {
                         isRefresh = false;
                         /**刷新数据成功 更新状态*/
                         lv_newsdata.updataState();
-                        T.showShort(mContext,"加载更多数据成功");
+                        T.showShort(mContext, "加载更多数据成功");
                     }
                 } else {
                     //加载更多,在原先的新闻数据基础上 添加更多新的新闻数据
@@ -235,8 +262,6 @@ public class NewsTagPageDetail {
                     lv_newsdata.updataState();
 
                 }
-
-
 
 
             }

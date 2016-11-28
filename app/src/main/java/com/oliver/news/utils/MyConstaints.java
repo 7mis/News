@@ -10,6 +10,8 @@ public interface MyConstaints {
     String LOCALNEWSDATAJSON = "localnewsdatajson";//本地新闻数据 json 格式
     String LUNBOANDLISTNEWS = "lunboandnews";//轮播图和新闻数据的缓存
 
+    String NEWSDETAILURL = "newsdetailurl";
+
 }
 
 
