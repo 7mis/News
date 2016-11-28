@@ -3,4 +3,5 @@
     <!--新闻中心 url-->
     <string name="newscenterurl">http://192.168.1.101:8080/zhbj/categories.json</string>
     <string name="baseurl">http://192.168.1.101:8080/zhbj/</string>
+    <string name="photourl">http://192.168.1.101:8080/zhbj/photos/photos_1.json</string>
 </resources>

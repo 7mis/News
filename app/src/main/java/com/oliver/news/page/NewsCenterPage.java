@@ -184,7 +184,11 @@ public class NewsCenterPage extends BasePage {
 
 
         //加载
-        View view = mBaseNewsCenterPages.get(index).getRootView();
+        BaseNewsCenterPage baseNewsCenterPage = mBaseNewsCenterPages.get(index);
+        View view = baseNewsCenterPage.getRootView();
+
+        /**初始化数据*/
+        baseNewsCenterPage.initData();
 
        /*添加到内容中*/
         fl_content.addView(view);

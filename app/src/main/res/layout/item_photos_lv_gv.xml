@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:gravity="center_horizontal"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--图片-->
+    <ImageView
+        android:id="@+id/iv_photos_item_pic"
+        android:layout_margin="5dip"
+        android:src="@drawable/pic_item_list_default"
+        android:scaleType="fitXY"
+        android:layout_width="match_parent"
+        android:layout_height="150dip" />
+
+    <!--文字描述-->
+    <TextView
+        android:textSize="16sp"
+        android:text="三生三世十里桃花"
+        android:id="@+id/tv_photos_item_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
