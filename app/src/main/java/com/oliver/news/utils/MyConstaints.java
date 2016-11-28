@@ -12,6 +12,8 @@ public interface MyConstaints {
 
     String NEWSDETAILURL = "newsdetailurl";
 
+    String READNEWSIDS = "readnewsids";//读过的新闻 id 标记
+
 }
 
 

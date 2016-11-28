@@ -1,6 +1,7 @@
 package com.oliver.news.tpipage;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -106,18 +107,31 @@ public class NewsTagPageDetail {
 
                 /*获取当前点击的数据*/
                 L.d("点击的 item 位置 - " + position);
-                NewsvCenterDetailData.DataBean.NewsBean news = mListNews.get(position - 1);
+               NewsvCenterDetailData.DataBean.NewsBean news = mListNews.get(position - 1);
                 /*传递新闻的 url*/
                 String newsUrl = news.getUrl();
+
+
+                /**记录当前的新闻被点击了*/
+                String newsId = String.valueOf(news.getId());//新闻的id
+                String readNewsIds = SPUtils.getString(mContext, MyConstaints.READNEWSIDS, "");
+                if (TextUtils.isEmpty(readNewsIds)) {
+                    /**空*/
+                    readNewsIds = newsId;
+                } else {
+                    readNewsIds += "," + newsId;
+                }
+
+                //保存 数据
+                SPUtils.putString(mContext, MyConstaints.READNEWSIDS, readNewsIds);
+
+                //更新 ListView 数据
+                mLvAdapter.notifyDataSetChanged();
 
                 /**点打开新闻*/
                 Intent intent = new Intent(mContext, NewsDetailActivity.class);
                 intent.putExtra(MyConstaints.NEWSDETAILURL, newsUrl);
                 mContext.startActivity(intent);
-
-
-
-
 
 
             }
@@ -482,6 +496,24 @@ public class NewsTagPageDetail {
             NewsvCenterDetailData.DataBean.NewsBean newsBean = mListNews.get(position);
             /**设置 图片*/
             bitmapUtils.display(mViewHolder.iv_icon, newsBean.getListimage());
+
+            /**设置文本颜色*/
+            String readNewsId = SPUtils.getString(mContext, MyConstaints.READNEWSIDS, "");
+            if (readNewsId.contains(newsBean.getId())) {
+                //读过的新闻
+                mViewHolder.tv_title.setTextColor(Color.GRAY);
+                mViewHolder.tv_time.setTextColor(Color.GRAY);
+            } else {
+                //没读过的新闻
+                mViewHolder.tv_title.setTextColor(Color.BLACK);
+                mViewHolder.tv_time.setTextColor(Color.BLACK);
+            }
+
+
+
+
+
+
             /**设置 标题*/
             mViewHolder.tv_title.setText(newsBean.getTitle());
             /**设置 时间*/

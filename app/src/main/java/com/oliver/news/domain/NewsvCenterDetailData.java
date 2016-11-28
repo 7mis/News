@@ -114,7 +114,7 @@ public class NewsvCenterDetailData {
             private boolean comment;
             private String commentlist;
             private String commenturl;
-            private int id;
+            private String id;
             private String listimage;
             private String pubdate;
             private String title;
@@ -145,11 +145,11 @@ public class NewsvCenterDetailData {
                 this.commenturl = commenturl;
             }
 
-            public int getId() {
+            public String getId() {
                 return id;
             }
 
-            public void setId(int id) {
+            public void setId(String id) {
                 this.id = id;
             }
 
