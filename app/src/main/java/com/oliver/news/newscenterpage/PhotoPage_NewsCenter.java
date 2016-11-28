@@ -1,5 +1,6 @@
 package com.oliver.news.newscenterpage;
 
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,11 +61,23 @@ public class PhotoPage_NewsCenter extends BaseNewsCenterPage {
 
     @Override
     public void initData() {
+        String photoUrl = mContext.getString(R.string.photourl);
+
+
         /**本地数据*/
+        String jsonLocal = SPUtils.getString(mContext, photoUrl, "");
+        if (!TextUtils.isEmpty(jsonLocal)) {
+            /**处理本地数据*/
+
+            /**解析json数据*/
+            PhotoNewsData photoNewsData = parseJsonData(jsonLocal);
+
+            /**处理json数据*/
+            processData(photoNewsData);
+        }
 
 
         /**网络数据*/
-        String photoUrl = mContext.getString(R.string.photourl);
         getDataFromNet(photoUrl);
         super.initData();
     }
@@ -112,6 +125,7 @@ public class PhotoPage_NewsCenter extends BaseNewsCenterPage {
 
     /**
      * 完成 ListView 和 GridView 切换
+     *
      * @param v 按钮
      */
     public void swtichListOrGrid(ImageView v) {
@@ -122,7 +136,7 @@ public class PhotoPage_NewsCenter extends BaseNewsCenterPage {
             gv_showData.setVisibility(View.GONE);
 
             /**改变 v 的src*/
-        v.setImageResource(R.drawable.icon_pic_grid_type);
+            v.setImageResource(R.drawable.icon_pic_grid_type);
 
         } else {
             /**显示GridView*/
