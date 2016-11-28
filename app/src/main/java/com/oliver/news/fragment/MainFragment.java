@@ -122,7 +122,7 @@ public class MainFragment extends BaseFragment {
     /**
      * 设置当前选择的页面
      */
-    private void switchPages() {
+    public void switchPages() {
         vp_pagers.setCurrentItem(selectIndex);
 
 
@@ -132,6 +132,21 @@ public class MainFragment extends BaseFragment {
             mContext.getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
         } else {
             mContext.getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+
+        }
+
+    }
+
+    public void initCurrentPage() {
+
+        switch (selectIndex) {
+            case 0:
+                rg_radios.check(R.id.rb_home);
+                break;
+            case 1:
+                rg_radios.check(R.id.rb_news);
+                default:
+                    break;
 
         }
 
@@ -148,7 +163,8 @@ public class MainFragment extends BaseFragment {
     public void initData() {
 
         /*默认选择第一个页面*/
-        rg_radios.check(R.id.rb_home);
+//        rg_radios.check(R.id.rb_home);
+        initCurrentPage();
 
         /**添加 5 个页面*/
         pages.add(new HomePage(mContext));

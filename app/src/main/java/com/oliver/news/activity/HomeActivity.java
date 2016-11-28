@@ -10,6 +10,7 @@ import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.oliver.news.R;
 import com.oliver.news.fragment.LeftFragment;
 import com.oliver.news.fragment.MainFragment;
+import com.oliver.news.utils.L;
 
 /**
  * Created by Administrator on 2016/11/18.
@@ -30,6 +31,16 @@ public class HomeActivity extends SlidingFragmentActivity {
 
         initData();
 
+    }
+
+    /**
+     * 恢复显示
+     */
+    @Override
+    protected void onResume() {
+        L.d("onResume ------");
+        getMainFragment().initCurrentPage();
+        super.onResume();
     }
 
     /**
