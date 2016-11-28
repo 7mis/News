@@ -22,6 +22,17 @@ public abstract class BaseFragment extends Fragment {
     protected HomeActivity mContext;
 
     /**
+     * 只要 activity 不销毁，该方法不会重复调用
+     */
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+
+        initData();
+        initEvent();
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    /**
      * 依附在 activity
      */
     @Override
@@ -62,8 +73,8 @@ public abstract class BaseFragment extends Fragment {
      */
     @Override
     public void onStart() {
-        initData();
-        initEvent();
+//        initData();
+//        initEvent();
         super.onStart();
     }
 }

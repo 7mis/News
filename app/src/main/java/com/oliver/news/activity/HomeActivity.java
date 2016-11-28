@@ -39,7 +39,7 @@ public class HomeActivity extends SlidingFragmentActivity {
     @Override
     protected void onResume() {
         L.d("onResume ------");
-        getMainFragment().initCurrentPage();
+//        getMainFragment().initCurrentPage();
         super.onResume();
     }
 

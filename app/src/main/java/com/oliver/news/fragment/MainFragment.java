@@ -163,8 +163,8 @@ public class MainFragment extends BaseFragment {
     public void initData() {
 
         /*默认选择第一个页面*/
-//        rg_radios.check(R.id.rb_home);
-        initCurrentPage();
+        rg_radios.check(R.id.rb_home);
+//        initCurrentPage();
 
         /**添加 5 个页面*/
         pages.add(new HomePage(mContext));
