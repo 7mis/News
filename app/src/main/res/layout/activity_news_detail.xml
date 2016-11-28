@@ -4,9 +4,30 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:text="新闻的界面"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <!--标题栏-->
+    <include layout="@layout/title_bar" />
 
+    <!--显示新闻的组件  webview-->
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--显示新闻-->
+        <WebView
+            android:id="@+id/wv_newsdetail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </WebView>
+
+        <!--加载新闻的进度条-->
+        <ProgressBar
+
+            android:id="@+id/pb_newsdetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateDrawable="@drawable/red_process"
+            android:layout_gravity="center" />
+    </FrameLayout>
 </LinearLayout>
