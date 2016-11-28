@@ -1,7 +1,6 @@
 package com.oliver.news.tpipage;
 
 import android.os.Handler;
-import android.os.SystemClock;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
@@ -11,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -75,6 +73,9 @@ public class NewsTagPageDetail {
     private boolean isRefresh = false;
 
 
+    private String moreUrl;//加载更多数据的 url
+
+
     public NewsTagPageDetail(HomeActivity context, NewsCenterData_GosnFormat.DataBean.ChildrenBean childrenBean) {
         this.mContext = context;
         this.mChildrenBean = childrenBean;
@@ -103,7 +104,7 @@ public class NewsTagPageDetail {
             public void freshData() {
 
                 isRefresh = true;
-                getDataFromeNet(newsDetailUrl);
+                getDataFromeNet(newsDetailUrl,false);
 
 //                /*更新数据*/
 //                new Thread(){
@@ -129,20 +130,21 @@ public class NewsTagPageDetail {
             public void loadMore() {
                 L.d("加载更多数据的回调");
                 /*更新数据*/
-                new Thread(){
-                    @Override
-                    public void run() {
-                        SystemClock.sleep(2000);
-                        /**更新状态*/
-                        mContext.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                /**更新状态*/
-                                lv_newsdata.updataState();
-                            }
-                        });
-                    }
-                }.start();
+                /**获取更多的数据*/
+                if (!TextUtils.isEmpty(moreUrl)) {
+                    /**有更多数据*/
+                    getDataFromeNet(moreUrl,true);
+
+                } else {
+                    //没有更多数据
+                    T.showShort(mContext,"没有更多数据");
+
+                    //更新状态
+                    lv_newsdata.updataState();
+                }
+
+
+
             }
         });
 
@@ -187,7 +189,7 @@ public class NewsTagPageDetail {
 
 
         }
-        getDataFromeNet(newsDetailUrl);
+        getDataFromeNet(newsDetailUrl,false);//false 不是加载更多的数据
     }
 
     /**
@@ -195,7 +197,7 @@ public class NewsTagPageDetail {
      *
      * @param url
      */
-    private void getDataFromeNet(String url) {
+    private void getDataFromeNet(String url, final boolean isLoadingMore) {
         HttpUtils httpUtils = new HttpUtils();
         httpUtils.send(HttpRequest.HttpMethod.GET, url, new RequestCallBack<String>() {
             @Override
@@ -210,17 +212,32 @@ public class NewsTagPageDetail {
 
                 /**2. 解析 json 数据*/
                 NewsvCenterDetailData newsvCenterDetailData = parseJsonData(jsonDataStr);
-                /**3. 处理 json 数据*/
-                processData(newsvCenterDetailData);
 
-                /**检测是否是刷新数据*/
-                if (isRefresh) {
-                    T.showShort(mContext,"刷新数据成功");
+                if (!isLoadingMore) {//初始化 或者 刷新数据
+                    /**3. 处理 json 数据*/
+                    processData(newsvCenterDetailData);
 
-                    isRefresh = false;
+                    /**检测是否是刷新数据*/
+                    if (isRefresh) {
+                        T.showShort(mContext, "刷新数据成功");
+
+                        isRefresh = false;
+                        /**刷新数据成功 更新状态*/
+                        lv_newsdata.updataState();
+                        T.showShort(mContext,"加载更多数据成功");
+                    }
+                } else {
+                    //加载更多,在原先的新闻数据基础上 添加更多新的新闻数据
+                    mListNews.addAll(newsvCenterDetailData.getData().getNews());
+                    //通知界面
+                    mLvAdapter.notifyDataSetChanged();
                     /**刷新数据成功 更新状态*/
                     lv_newsdata.updataState();
+
                 }
+
+
+
 
             }
 
@@ -585,6 +602,17 @@ public class NewsTagPageDetail {
 
         /**创建一个类*/
         NewsvCenterDetailData newsvCenterDetailData = gson.fromJson(jsonDataStr, NewsvCenterDetailData.class);
+
+
+        /**加载更多数据的 url*/
+        String more = newsvCenterDetailData.getData().getMore();
+        if (!TextUtils.isEmpty(more)) {
+            //有更多数据
+            moreUrl = mContext.getResources().getString(R.string.baseurl) + more;
+
+        } else {
+            moreUrl = "";
+        }
         /**获取结果*/
         return newsvCenterDetailData;
 

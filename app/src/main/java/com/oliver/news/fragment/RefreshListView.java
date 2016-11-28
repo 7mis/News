@@ -78,6 +78,9 @@ public class RefreshListView extends ListView {
                     //是否滑动到最后一条数据
                     L.d("最后可视的位置 - " + getLastVisiblePosition() + "<>" + getAdapter().getCount());
                     if (getLastVisiblePosition() == getAdapter().getCount() - 1 && !isLoadingMore) {
+
+                        isLoadingMore = true;
+
                         /**加载更多*/
                         L.d("上拉加载更多");
 
@@ -92,7 +95,6 @@ public class RefreshListView extends ListView {
                             mOnRefreshDataListener.loadMore();
                         }
 
-                        isLoadingMore = true;
                     }
 
                 }
