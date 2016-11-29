@@ -15,6 +15,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @desc 图片的三级缓存类:
@@ -46,10 +49,13 @@ public class BitmapCacheUtil {
     };
     private Bitmap bitmap;
     private Bitmap bitmapFromLocal;
+    private final ExecutorService mThreadPool;//线程池
 
 
     public BitmapCacheUtil(HomeActivity context) {
         this.mContext = context;
+
+        mThreadPool = Executors.newFixedThreadPool(6);
     }
 
     public void display(ImageView view, String url) {
@@ -104,7 +110,11 @@ public class BitmapCacheUtil {
      */
     private void getBitmapFromNet(ImageView view, String url) {
         //通过线程来做
-        new Thread(new BitmapFromNet(view, url)).start();
+
+        /**线程优化 线程池*/
+
+//        new Thread(new BitmapFromNet(view, url)).start();
+        mThreadPool.submit(new BitmapFromNet(view, url));
 
     }
 

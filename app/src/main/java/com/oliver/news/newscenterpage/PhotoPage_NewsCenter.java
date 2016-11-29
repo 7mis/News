@@ -38,17 +38,16 @@ public class PhotoPage_NewsCenter extends BaseNewsCenterPage {
     private ListView lv_showData;
     @ViewInject(R.id.gv_photos)
     private GridView gv_showData;
-    private Object dataFromNet;
     private MyAdapter mAdapter;
     private List<PhotoNewsData.DataBean.NewsBean> mNews;
     private final BitmapCacheUtil mBitmapCacheUtils;
-    private final BitmapUtils mBitmapUtils;
+//    private final BitmapUtils mBitmapUtils;
 
     public PhotoPage_NewsCenter(HomeActivity mContext) {
         super(mContext);
 
 
-        mBitmapUtils = new BitmapUtils(mContext);
+//        mBitmapUtils = new BitmapUtils(mContext);
         mBitmapCacheUtils = new BitmapCacheUtil(mContext);
     }
 
@@ -189,8 +188,8 @@ public class PhotoPage_NewsCenter extends BaseNewsCenterPage {
             viewHolder.tv_desc.setText(news.getTitle());
 
             /*图片*/
-            mBitmapUtils.display(viewHolder.iv_pic, news.getListimage());
-//            mBitmapCacheUtils.display(viewHolder.iv_pic, news.getListimage());
+//            mBitmapUtils.display(viewHolder.iv_pic, news.getListimage());
+            mBitmapCacheUtils.display(viewHolder.iv_pic, news.getListimage());
 
 
             return convertView;
