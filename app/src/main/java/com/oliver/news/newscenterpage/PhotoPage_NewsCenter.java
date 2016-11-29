@@ -43,7 +43,7 @@ public class PhotoPage_NewsCenter extends BaseNewsCenterPage {
     private MyAdapter mAdapter;
     private List<PhotoNewsData.DataBean.NewsBean> mNews;
     private final BitmapCacheUtils mBitmapCacheUtils;
-        private final BitmapUtils mBitmapUtils;
+    private final BitmapUtils mBitmapUtils;
 
     public PhotoPage_NewsCenter(HomeActivity mContext) {
         super(mContext);
