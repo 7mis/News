@@ -43,13 +43,13 @@ public class PhotoPage_NewsCenter extends BaseNewsCenterPage {
     private MyAdapter mAdapter;
     private List<PhotoNewsData.DataBean.NewsBean> mNews;
     private final BitmapCacheUtils mBitmapCacheUtils;
-    //    private final BitmapUtils mBitmapUtils;
+        private final BitmapUtils mBitmapUtils;
 
     public PhotoPage_NewsCenter(HomeActivity mContext) {
         super(mContext);
 
 
-//        mBitmapUtils = new BitmapUtils(mContext);
+        mBitmapUtils = new BitmapUtils(mContext);
         mBitmapCacheUtils = new BitmapCacheUtils(mContext);
     }
 
@@ -190,8 +190,8 @@ public class PhotoPage_NewsCenter extends BaseNewsCenterPage {
             viewHolder.tv_desc.setText(news.getTitle());
 
             /*图片*/
-//            mBitmapUtils.display(viewHolder.iv_pic, news.getListimage());
-            mBitmapCacheUtils.display(viewHolder.iv_pic, news.getListimage());
+            mBitmapUtils.display(viewHolder.iv_pic, news.getListimage());
+//            mBitmapCacheUtils.display(viewHolder.iv_pic, news.getListimage());
 
 
             return convertView;
