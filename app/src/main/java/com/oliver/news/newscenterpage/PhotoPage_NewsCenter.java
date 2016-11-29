@@ -1,7 +1,6 @@
 package com.oliver.news.newscenterpage;
 
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -22,7 +21,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.oliver.news.R;
 import com.oliver.news.activity.HomeActivity;
 import com.oliver.news.domain.PhotoNewsData;
-import com.oliver.news.utils.BitmapCacheUtils;
+import com.oliver.news.utils.BitmapCacheUtil;
 import com.oliver.news.utils.L;
 import com.oliver.news.utils.SPUtils;
 import com.oliver.news.utils.T;
@@ -42,7 +41,7 @@ public class PhotoPage_NewsCenter extends BaseNewsCenterPage {
     private Object dataFromNet;
     private MyAdapter mAdapter;
     private List<PhotoNewsData.DataBean.NewsBean> mNews;
-    private final BitmapCacheUtils mBitmapCacheUtils;
+    private final BitmapCacheUtil mBitmapCacheUtils;
     private final BitmapUtils mBitmapUtils;
 
     public PhotoPage_NewsCenter(HomeActivity mContext) {
@@ -50,7 +49,7 @@ public class PhotoPage_NewsCenter extends BaseNewsCenterPage {
 
 
         mBitmapUtils = new BitmapUtils(mContext);
-        mBitmapCacheUtils = new BitmapCacheUtils(mContext);
+        mBitmapCacheUtils = new BitmapCacheUtil(mContext);
     }
 
     @Override
