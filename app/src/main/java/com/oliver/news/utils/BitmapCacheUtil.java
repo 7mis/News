@@ -15,7 +15,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -30,55 +29,55 @@ import java.util.concurrent.Executors;
 public class BitmapCacheUtil {
     private HomeActivity mContext;
 
-    private Map<ImageView, String> iv_urls = new HashMap<>();//记录最后显示 ImageView 对应的 url
-
 
     /**
      * 获取可用内存的一般作为缓存容器大小
      */
     private int maxSize = (int) (Runtime.getRuntime().freeMemory() / 2);
+    private Map<ImageView, String> iv_urls = new HashMap<>();//记录最后显示 ImageView 对应的 url
+
+
     //android 提供的缓存机制类
     private LruCache<String, Bitmap> mLruCaches = new LruCache<String, Bitmap>(maxSize) {
 
         /**动态计算 存放信息大小 不会造成内存浪费*/
         @Override
         protected int sizeOf(String key, Bitmap value) {
-            return value.getByteCount();//获取字节大小
-//            return value.getRowBytes() * value.getHeight();
+//            return value.getByteCount();//获取字节大小
+            return value.getRowBytes() * value.getHeight();
         }
     };
-    private Bitmap bitmap;
-    private Bitmap bitmapFromLocal;
     private final ExecutorService mThreadPool;//线程池
 
 
     public BitmapCacheUtil(HomeActivity context) {
-        this.mContext = context;
+        mContext = context;
 
         mThreadPool = Executors.newFixedThreadPool(6);
     }
 
     public void display(ImageView view, String url) {
         //1. 从内存获取数据
-        bitmap = mLruCaches.get(url);
+        Bitmap bitmap = mLruCaches.get(url);
         if (bitmap != null) {
             L.d("-My- 内存中获取图片");
             /**缓存中有数据*/
             view.setImageBitmap(bitmap);
 
-            /**往内存中保存一份*/
-            writeBitmap2Memory(url, bitmap);
 
-            return ;
+            return;
         }
 
         //2. 本地磁盘获取数据
-        bitmapFromLocal = getBitmapFromLocal(url);
-        if (bitmapFromLocal != null) {
+        bitmap = getBitmapFromLocal(url);
+        if (bitmap != null) {
             L.d("-My- 本地中获取图片");
 
             /**本地有图片*/
-            view.setImageBitmap(bitmapFromLocal);
+            view.setImageBitmap(bitmap);
+
+            /**往内存中保存一份*/
+            writeBitmap2Memory(url, bitmap);
             return;
         }
 
@@ -88,18 +87,6 @@ public class BitmapCacheUtil {
         iv_urls.put(view, url);
         getBitmapFromNet(view, url);
 
-    }
-
-    /**
-     * 本地获取数据
-     *
-     * @param mUrl
-     */
-    private Bitmap getBitmapFromLocal(String mUrl) {
-        File file = new File(mContext.getCacheDir(), mUrl.substring(mUrl.lastIndexOf('/')+1));
-        Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-
-        return bitmap;
     }
 
     /**
@@ -117,6 +104,8 @@ public class BitmapCacheUtil {
         mThreadPool.submit(new BitmapFromNet(view, url));
 
     }
+
+
 
     /**
      * 网络获取数据
@@ -170,8 +159,6 @@ public class BitmapCacheUtil {
                             }
 
 
-
-
                         }
                     });
                 }
@@ -184,15 +171,40 @@ public class BitmapCacheUtil {
     }
 
     /**
+     * 内存中保存数据
+     *
+     * @param url
+     * @param bitmap
+     */
+    public void writeBitmap2Memory(String url, Bitmap bitmap) {
+
+        mLruCaches.put(url, bitmap);//内存中保存一份
+
+    }
+
+    /**
+     * 本地获取数据
+     *
+     * @param mUrl
+     */
+    public Bitmap getBitmapFromLocal(String mUrl) {
+        File file = new File(mContext.getCacheDir(), mUrl.substring(mUrl.lastIndexOf('/') + 1));
+        Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+
+        return bitmap;
+    }
+
+
+    /**
      * 本地中保存
      *
      * @param mUrl
      * @param bitmap
      */
-    private void writeBitmap2Local(String mUrl, Bitmap bitmap) {
+    public void writeBitmap2Local(String mUrl, Bitmap bitmap) {
         //cache
         File cacheDir = mContext.getCacheDir();
-        File file = new File(cacheDir, mUrl.substring(mUrl.lastIndexOf('/')+1));
+        File file = new File(cacheDir, mUrl.substring(mUrl.lastIndexOf('/') + 1));
 
 
         try {
@@ -203,17 +215,7 @@ public class BitmapCacheUtil {
 
     }
 
-    /**
-     * 内存中保存数据
-     *
-     * @param mUrl
-     * @param bitmap
-     */
-    private void writeBitmap2Memory(String mUrl, Bitmap bitmap) {
 
-        mLruCaches.put(mUrl, bitmap);//内存中保存一份
-
-    }
 
 
 }
