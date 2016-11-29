@@ -22,6 +22,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.oliver.news.R;
 import com.oliver.news.activity.HomeActivity;
 import com.oliver.news.domain.PhotoNewsData;
+import com.oliver.news.utils.BitmapCacheUtils;
 import com.oliver.news.utils.L;
 import com.oliver.news.utils.SPUtils;
 import com.oliver.news.utils.T;
@@ -41,13 +42,15 @@ public class PhotoPage_NewsCenter extends BaseNewsCenterPage {
     private Object dataFromNet;
     private MyAdapter mAdapter;
     private List<PhotoNewsData.DataBean.NewsBean> mNews;
-    private final BitmapUtils mBitmapUtils;
+    private final BitmapCacheUtils mBitmapCacheUtils;
+    //    private final BitmapUtils mBitmapUtils;
 
     public PhotoPage_NewsCenter(HomeActivity mContext) {
         super(mContext);
 
 
-        mBitmapUtils = new BitmapUtils(mContext);
+//        mBitmapUtils = new BitmapUtils(mContext);
+        mBitmapCacheUtils = new BitmapCacheUtils(mContext);
     }
 
     @Override
@@ -187,7 +190,8 @@ public class PhotoPage_NewsCenter extends BaseNewsCenterPage {
             viewHolder.tv_desc.setText(news.getTitle());
 
             /*图片*/
-            mBitmapUtils.display(viewHolder.iv_pic, news.getListimage());
+//            mBitmapUtils.display(viewHolder.iv_pic, news.getListimage());
+            mBitmapCacheUtils.display(viewHolder.iv_pic, news.getListimage());
 
 
             return convertView;
